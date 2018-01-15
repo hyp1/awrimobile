@@ -1,0 +1,52 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "ch.awri"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "ch.awri"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "ch.awri"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "ch.awri"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "ch.awri"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "ch.awri"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "ch.awri"
+        },
+        "cordova-plugin-printer": {
+            "PACKAGE_NAME": "ch.awri.mobile"
+        },
+        "cordova-plugin-vibration": {
+            "PACKAGE_NAME": "ch.awri.mobile"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "ch.awri.mobile"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "ch.awri.mobile"
+        },
+        "cordova-plugin-media-capture": {
+            "PACKAGE_NAME": "ch.awri.mobile"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "ch.awri"
+        }
+    }
+}

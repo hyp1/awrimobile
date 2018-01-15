@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+	<buildpathentry kind="lib" path="platforms/browser/build/package.zip"/>
+	<buildpathentry kind="lib" path="platforms/android/build/intermediates/exploded-aar/com.android.support/support-v4/24.1.1/annotations.zip"/>
+	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
+</buildpath>
