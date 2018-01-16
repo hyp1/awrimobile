@@ -188,7 +188,7 @@ function _map_flag_count_pageshow(options) {
             // Check options.entity_type and/or options.bundle here to customize
             // the message per content type.
             var container_id = map_flag_count_container_id(flag.name, options.entity_id);
-            var html = '<p>Flagged ' + result.count + ' ' + drupalgap_format_plural(result.count, 'time', 'times') + '!</p>';
+            var html = '<p> ' + result.count + ' ' + drupalgap_format_plural(result.count, t('time'), t('times')) +' '+ t('Flagged')+ '!</p>';
             $('#' + container_id).html(html).trigger('create');
           }
           catch (error) { console.log('_map_flag_count_pageshow - success - ' + error); }

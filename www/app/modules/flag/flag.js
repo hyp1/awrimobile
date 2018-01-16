@@ -223,7 +223,7 @@ function flag_load(fid) {
  * @returns {String}
  */
 function flag_quick_link(flag_name, entity_type, entity_id, flagged) {
-  return l('Do it', null, {
+  return bl('Do it', null, {
     attributes: {
       onclick: _flag_quick_link_onclick_attribute(flag_name, entity_type, entity_id, flagged),
       'data-theme': _flag_quick_link_data_theme(flagged)

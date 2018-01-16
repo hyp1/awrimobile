@@ -26,9 +26,9 @@
 
     </head>
     <body>
-<!-- Load Cordova
+<!-- Load Cordova -->
 <script src="cordova.js"></script>
- -->
+ 
       <!-- Mobile Application Splash Screen -->
       <div id="_drupalgap_splash" data-role="page">
          <div data-role="header" data-theme="b"><h2>DrupalGap</h2></div>
@@ -41,6 +41,9 @@
 <!-- Load OpenFB -->
 <script src="openfb.js"></script>
 <script type="text/javascript" charset="utf-8">
+openFB.init('126766317359254');
+
+/*
 document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
     console.log(navigator.device.capture);
@@ -66,7 +69,7 @@ function captureVideo(){
 // start audio capture
 navigator.device.capture.captureVideo(captureSuccess, captureError, {limit:1});
 }
-   
+   */
     </script>
 
       <!-- Load DrupalGap -->

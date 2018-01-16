@@ -26,7 +26,7 @@ Drupal.settings.file_public_path = 'sites/default/files';
 //Drupal.settings.file_private_path = 'system/files';
 
 // The Default Language Code
-Drupal.settings.language_default = 'und';
+Drupal.settings.language_default = 'de';
 
 /* CACHING AND PERFORMANCE */
 
@@ -103,11 +103,11 @@ Drupal.settings.cache.views = {
 // DrupalGap Mode (defaults to 'web-app')
 //  'web-app' - use this mode to build a web application for a browser window
 //  'phonegap' - use this mode to build a mobile application with phonegap
-drupalgap.settings.mode = 'web-app';
+drupalgap.settings.mode = 'phonegap';
 
 // Language Files - locale/[language-code].json
 drupalgap.settings.locale = {
-   /* es: { } */
+    de: { } 
 };
 
 drupalgap.settings.flag = {
@@ -127,19 +127,19 @@ drupalgap.settings.facebook = {
  *************/
 
 // App Title
-drupalgap.settings.title = 'D7Mobile';
+drupalgap.settings.title = 'AWRIMobile';
  
 // App Front Page
-drupalgap.settings.front = 'dashboard';
+drupalgap.settings.front = 'start';
 
 // Theme
 drupalgap.settings.theme = 'easystreet3';
 
 // Logo
-drupalgap.settings.logo = 'themes/easystreet3/images/drupalgap.jpg';
+drupalgap.settings.logo = 'images/logo.png';
 
 // Offline Warning Message. Set to false to hide message.
-drupalgap.settings.offline_message = 'No connection found!';
+drupalgap.settings.offline_message = 'Keine Verbindung zu '+Drupal.settings.site_path+'... !';
 
 // Exit app message.
 drupalgap.settings.exit_message = 'Exit ' + drupalgap.settings.title + '?';
@@ -183,9 +183,23 @@ Drupal.modules.contrib['addressfield'] = {};
 
 /** Custom Modules - www/app/modules/custom **/
 
-Drupal.modules.custom['map'] = {};
+//Drupal.modules.custom['map'] = {};
+Drupal.modules.custom['start'] = {};
+Drupal.modules.custom['suche'] = {};
+Drupal.modules.custom['stellen'] = {};
+Drupal.modules.custom['inhalt'] = {};
+Drupal.modules.custom['lesezeichen'] = {};
 
-
+Drupal.modules.custom['dmt_menu'] = {};
+drupalgap.settings.dmt_menu = {		 
+		attributes: {
+         "style":"position:relative",          
+         "data-icon": 'star',
+           "data-iconpos": 'notext',
+           "data-mini": 'true',
+           "class": 'ui-btn-left',  //ui-btn-right         	                
+          }
+          };
 /** Custom Modules - www/app/modules/custom **/
 
 //Drupal.modules.custom['my_module'] = {};
@@ -235,7 +249,8 @@ drupalgap.settings.menus['user_menu_authenticated'] = {
         }
       }
     },
- {
+ /*
+    {
       title: 'Picture',
       path: 'avatar',
       options: {
@@ -244,6 +259,7 @@ drupalgap.settings.menus['user_menu_authenticated'] = {
         }
       }
     },
+   */
     {
       title: 'Logout',
       path: 'user/logout',
@@ -261,33 +277,46 @@ drupalgap.settings.menus['main_menu'] = {
   options: menu_popup_get_default_options(),
   links: [
     {
-      title:'Content',
-      path:'node',
+      title:'Rechtsfragen',
+      path:'inhalt',
       options:{
         attributes: {
-          'data-icon': 'star',
+          'data-icon': 'grid',
           'class': 'ui-btn ui-btn-icon-right'
         }
       }
     },
- {
-      title:'Map',
-      path:'map',
+ 
+    {
+      title:'Suchen',
+      path:'search/node/',
       options:{
         attributes:{
-          'data-icon':'star'
+          'data-icon':'search'
         }
       }
     },
+    
+    {
+        title:'Frage stellen',
+        path:'stellen',
+        options:{
+          attributes:{
+            'data-icon':'comment'
+          }
+        }
+      },
+    
     {
       title:'Taxonomy',
       path:'taxonomy/vocabularies',
       options:{
         attributes:{
-          'data-icon':'grid'
+          'data-icon':'bullets'
         }
       }
     },
+    /*
     {
       title:'Users',
       path:'user-listing',
@@ -297,6 +326,7 @@ drupalgap.settings.menus['main_menu'] = {
         }
       }
     }
+    */
   ]
 };
 
@@ -337,10 +367,16 @@ drupalgap.settings.blocks.easystreet3 = {
    //     mode: 'include'
    //   }
    // },
-    main: { }
+    main: { },
   },
   footer: {
-    powered_by: { }
+	  dmt_menu: {
+		   pages: {
+		        value: [drupalgap.settings.front],
+		        mode: 'include'
+		      }	
+	},
+	 // powered_by: { }
   }
 };
 
@@ -413,7 +449,7 @@ drupalgap.settings.menus.regions['header'] = {
 
 // Footer Region Links
 drupalgap.settings.menus.regions['footer'] = {
-  links: [
+  links: [      
     /* Back Button */
     {
       options: {
@@ -428,8 +464,8 @@ drupalgap.settings.menus.regions['footer'] = {
         value: [''],
         mode: 'exclude'
       }
-    }
-  ]
+    },
+  ],
 };
 
 /*********|
