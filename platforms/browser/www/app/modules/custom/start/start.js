@@ -9,7 +9,7 @@ function start_menu() {
     items['start'] = {
       title: 'AWRI Rechtsfragen',
       page_callback: 'start_page',
-      pageshow: 'start_pageshow'
+  //    pageshow: 'start_pageshow'
     };
     return items;
   }
@@ -47,6 +47,14 @@ function start_page() {
       		  path: 'suche'
       	    }; 
     */
+    
+    content['my_button'] = {
+  		  theme: 'button',
+  		  text: 'Share',
+  		  attributes: {
+  		    onclick: "socialShare('https://awri.ch');"
+  		  }
+  		};
     
     content['c2'] = {
     		 theme: 'button_link',
@@ -473,5 +481,27 @@ function getCookie(name)
   var re = new RegExp(name + "=([^;]+)");
   var value = re.exec(document.cookie);
   return (value != null) ? unescape(value[1]) : null;
+}
+
+function socialShare(url){
+	// this is the complete list of currently supported params you can pass to the plugin (all optional)
+	var options = {
+	  message: 'Datenbank für Rechtsfragen', // not supported on some apps (Facebook, Instagram)
+	  subject: 'AWRI', // fi. for email
+	  files: ['', ''], // an array of filenames either locally or remotely
+	  url: url,
+	  chooserTitle: 'Wohin möchten Sie teilen?' // Android only, you can override the default share sheet title
+	}
+
+	var onSuccess = function(result) {
+	  console.log("Share completed? " + result.completed); // On Android apps mostly return false even while it's true
+	  console.log("Shared to app: " + result.app); // On Android result.app is currently empty. On iOS it's empty when sharing is cancelled (result.completed=false)
+	}
+
+	var onError = function(msg) {
+	  console.log("Sharing failed with message: " + msg);
+	}
+
+	window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);	
 }
 

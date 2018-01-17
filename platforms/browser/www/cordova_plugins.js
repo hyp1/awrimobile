@@ -371,6 +371,20 @@ module.exports = [
         "id": "cordova-plugin-media-capture.CaptureProxy",
         "pluginId": "cordova-plugin-media-capture",
         "runs": true
+    },
+    {
+        "file": "plugins/es6-promise-plugin/www/promise.js",
+        "id": "es6-promise-plugin.Promise",
+        "pluginId": "es6-promise-plugin",
+        "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-x-socialsharing/www/SocialSharing.js",
+        "id": "cordova-plugin-x-socialsharing.SocialSharing",
+        "pluginId": "cordova-plugin-x-socialsharing",
+        "clobbers": [
+            "window.plugins.socialsharing"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -388,7 +402,9 @@ module.exports.metadata =
     "cordova-plugin-vibration": "2.1.6",
     "cordova-plugin-inappbrowser": "1.7.2",
     "cordova-plugin-file": "6.0.1",
-    "cordova-plugin-media-capture": "3.0.1"
+    "cordova-plugin-media-capture": "3.0.1",
+    "es6-promise-plugin": "4.1.0",
+    "cordova-plugin-x-socialsharing": "5.2.1"
 }
 // BOTTOM OF METADATA
 });

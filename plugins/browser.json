@@ -42,11 +42,17 @@
         },
         "cordova-plugin-media-capture": {
             "PACKAGE_NAME": "ch.awri.mobile"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "ch.awri.mobile"
         }
     },
     "dependent_plugins": {
         "cordova-plugin-compat": {
             "PACKAGE_NAME": "ch.awri"
+        },
+        "es6-promise-plugin": {
+            "PACKAGE_NAME": "ch.awri.mobile"
         }
     }
 }

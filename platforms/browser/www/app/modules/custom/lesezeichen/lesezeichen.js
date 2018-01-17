@@ -19,9 +19,6 @@ function lesezeichen_page() {
 		console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/),'DEBUG');
 	var content={};
 	try {
-		content['posthead'] = {
-				markup : '<h2>Rechtsfrage stellen(anonym)<dh2>',
-			};
 
 		  content['my_articles_list'] = {
 			      theme: 'view',

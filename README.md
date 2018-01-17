@@ -14,3 +14,16 @@ https://build.phonegap.com/apps/2970156/share
 
 git clone https://github.com/hyp1/awrimobile.git
 
+
+https://build.phonegap.com/apps/2970156/
+
+
+cordova-plugin-x-socialsharing
+
+cordova-plugin-splashscreen
+cordova-plugin-actionsheet
+
+
+KEYSTORE
+~/-android/.keystore
+~/-android/.debug.keystore
