@@ -136,7 +136,7 @@ drupalgap.settings.front = 'start';
 drupalgap.settings.theme = 'easystreet3';
 
 // Logo
-drupalgap.settings.logo = 'images/logo.png';
+drupalgap.settings.logo = 'images/re_logo640.jpg';
 
 // Offline Warning Message. Set to false to hide message.
 drupalgap.settings.offline_message = 'Keine Verbindung zu '+Drupal.settings.site_path+'... !';
@@ -289,7 +289,7 @@ drupalgap.settings.menus['main_menu'] = {
  
     {
       title:'Suchen',
-      path:'search/node/',
+      path:'suche',
       options:{
         attributes:{
           'data-icon':'search'
@@ -376,6 +376,7 @@ drupalgap.settings.blocks.easystreet3 = {
 		        mode: 'include'
 		      }	
 	},
+	start_footer: { }
 	 // powered_by: { }
   }
 };

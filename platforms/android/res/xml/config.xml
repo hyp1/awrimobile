@@ -39,6 +39,9 @@
     <feature name="SocialSharing">
         <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
     </feature>
+    <feature name="AppVersion">
+        <param name="android-package" value="uk.co.whiteoctober.cordova.AppVersion" />
+    </feature>
     <name>AwriMobile</name>
     <description>
         Alles was Recht ist. Schweizer Datenbank für Rechtsfragen

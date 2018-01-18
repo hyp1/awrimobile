@@ -45,6 +45,9 @@
         },
         "cordova-plugin-x-socialsharing": {
             "PACKAGE_NAME": "ch.awri.mobile"
+        },
+        "cordova-plugin-app-version": {
+            "PACKAGE_NAME": "ch.awri.mobile"
         }
     },
     "dependent_plugins": {

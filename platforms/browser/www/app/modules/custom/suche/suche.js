@@ -2,37 +2,41 @@ function suche_menu() {
   try {
     var items = {};
     items['suche'] = {
-      title: 'Suche',
-      page_callback: 'suche',
- //     pageshow: 'start_pageshow'
+      title: 'Suchen',
+      page_callback: 'suche',   
     };
     return items;
   }
   catch (error) { console.log('start_menu - ' + error); }
 }
 
-/**
- * The map page callback.
- */
 function suche() {
   try {
     var content = {};
-    var map_attributes = {
-      id: 'map_map',
-      style: 'width: 100%; height: 320px;'
+
+    content['c0'] = {
+      markup: '<label for="search-2">Suchwörter eingeben.</label>      <input type="search" name="search-2" id="search-2"  value="" />'
     };
-    content['c1'] = {
-      markup: '<label for="search-2">Search Input:</label>      <input type="search" name="search-2" id="search-2"  value="" />'
-    };
-    
+   
     content['c2'] = {
     		 theme: 'button',
-    		  text: 'Go',
+    		  text: 'Weiter',
     		  attributes: {
-    		    onclick: dosearch(),
+    		    onclick: 'dosearch2()',
+    		    'data-theme': 'b',
     		  },
     		
     };
+    
+    content['c3'] = {
+    		  theme: 'jqm_item_list',
+    		  title: 'Suchresultate',
+    		  items: [],
+    		  attributes: {
+    		    'data-inset': true,
+    		    'id': 'resultat'
+    		  }
+    		};
     
     return content;
   }
@@ -41,27 +45,10 @@ function suche() {
 }
 
 
-function test(){
-	
-	var query = {
-			  parameters: {
-			    'type': 'rechtsfrage'
-			  }
-			};
-			node_index(query, {
-			    success:function(nodes){
-			      alert('Indexed ' + nodes.length + ' node(s)!');
-			    }
-			});
-}
-
-
-function suche_search(options) {
-	alert("search");
+function suche_search3(options) {
 	  try {
-		//  options={};
 	    options.method = 'GET';
-	    options.path = 'search_node/retrieve&keys=miete';
+	    options.path = 'search_node/retrieve&keys='+$('#search-2').textinput().val();
 	    options.service = 'drupalgap';
 	    options.resource = 'search_node';
 	    options.contentType = 'application/json';
@@ -70,14 +57,21 @@ function suche_search(options) {
 	  catch (error) {
 	    console.log('suche_search - ' + error);
 	  }
-	}
+}
 
-function dosearch(){
-suche_search({
+
+function dosearch2(){
+	if($('#search-2').textinput().val().length<3){
+		drupalgap_alert("Bitte Stichwörter eingeben");
+	return;
+	}		
+suche_search3({
     success: function(result) {
-      var user_count = result[0];
-      var msg = 'There are ' + user_count + ' registered user(s)!'
-      drupalgap_alert(msg);
+    	var items=[];
+    	for(i=0;i<result.length;i++){
+    		items.push(l('<h2>'+result[i].title+'</h2><p>'+result[i].snippet+'</p><p>'+result[i].extra.comment+'</p>','node/'+result[i].node.nid));
+    	}
+    	 drupalgap_item_list_populate('#resultat', items);
     }
 });
 };
