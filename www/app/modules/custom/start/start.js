@@ -7,14 +7,15 @@ function start_menu() {
   try {
     var items = {};
     items['start'] = {
-      title: 'AWRI Rechtsfragen',
+      title: 'Alles was Recht ist!',
       page_callback: 'start_page',
-  //    pageshow: 'start_pageshow'
+      pageshow: 'start_pageshow'
     };
     return items;
   }
   catch (error) { console.log('start_menu - ' + error); }
 }
+
 
 /**
  * The map page callback.
@@ -40,14 +41,11 @@ function start_page() {
     		    onclick: "_getFBID();"
     		  }
     		};
-  
-    content['suche'] = {
-      		 theme: 'button_link',
-      		  text: 'Rechtsfragen suchen',
-      		  path: 'suche'
-      	    }; 
+     	    }; 
     */
-    
+
+   
+    /*
  content['my_button'] = {
   		  theme: 'button',
   		  text: 'Share',
@@ -55,22 +53,20 @@ function start_page() {
   		    onclick: "socialShare('https://awri.ch');"
   		  }
   		};
-    
+*/    
     content['c2'] = {
     		 theme: 'button_link',
     		  text: 'Rechtsfragen',
     		  path: 'inhalt'
     	    };
     
+  
     content['c3'] = {
-    		 theme: 'button_link',
-    		  text: 'Suchen',
-    		 path: 'search/node/'
-    		  //attributes:{
-    		  //onclick: "drupalgap_goto('search/node')"
-    		  //}
-    		  }; 
-    
+     		 theme: 'button_link',
+     		  text: 'Rechtsfragen suchen',
+     		  path: 'suche'
+   };
+        
  
     
     content['c4'] = {
@@ -80,12 +76,18 @@ function start_page() {
       	    }; 
     
     
-    content['c5'] = {
+  if(Drupal.user.uid>0)  content['c5'] = {
       		 theme: 'button_link',
-      		  text: 'Lesezeichen',
+      		  text: 'Ihre Lesezeichen',
       		  path: 'lesezeichen'
       	    }; 
-    
+   /* 
+    content['c6'] = {
+     		 theme: 'button_link',
+     		  text: 'Kontakt',
+     		  path: 'contact'
+     	    }; 
+    */
    /*
     content['stellen2'] = {
    		 theme: 'button_link',
@@ -96,6 +98,10 @@ function start_page() {
     return content;
   }
   catch (error) { console.log('map_map - ' + error); }
+}
+
+function start_pageshow(){
+$('.ui-title').html("AWRI");
 }
 
 function start_services_postprocess(options, result) {
@@ -141,6 +147,37 @@ function start_services_postprocess(options, result) {
   catch (error) {
     console.log('starte_services_postprocess - ' + error);
   }
+}
+
+function start_block_info() {
+	try {
+		var blocks = {};
+		blocks['start_footer'] = {
+			delta : 'start_footer',
+			module : 'start'
+		};
+		return blocks;
+	} catch (error) {
+		console.log('start_block_info - ' + error);
+	}
+}
+
+function start_block_view(delta, region) {
+	try {
+		var content = {};
+		switch (delta) {
+		case 'start_footer':
+			content['start_footer'] = {
+				markup : '<a href="#" class="ui-btn" onclick="javascript:window.open(\'https://m.facebook.com/groups/RechtsberatungSchweiz/\', \'_blank\', \'location=yes\');">Rechtsforum Schweiz <img src="'+drupalgap_get_path('module','start')+'/fb_group_s.png" width="24" height="24"/></a>',
+			};
+
+			break;
+		default:
+		}
+		return drupalgap_render(content);
+	} catch (error) {
+		console.log('start_block_view - ' + error);
+	}
 }
 
 /*
@@ -199,7 +236,7 @@ function start_node_page_view_alter_rechtsfrage(node, options) {
 	      content: node.content,
 	      attributes: { 'data-collapsed': 'false' }
 	    };
-	    console.log(node);
+//	    console.log(node);
 	 //  alert(Drupal.user.uid);
 	   	    	    
 
@@ -256,7 +293,7 @@ function start_node_page_view_alter_rechtsfrage(node, options) {
 //Lesezeichen prüfen und Button setzen
 		  options={};
 		  options.success=function(result){
-			  console.log(result,"FDATA");
+//			  console.log(result,"FDATA");
 			 if(JSON.parse(result)==true);
 			 $('.awri-bookmark').html("Lesezeichen");
 			 $('.awri-bookmark').attr('class', 'awri-bookmark ui-link ui-btn ui-btn-a ui-shadow ui-corner-all');
@@ -284,7 +321,7 @@ function _getComments(nid){
 			comment_index(query, {
 			    success: function(comments){
 			    	for(var i=0;i<comments.length;i++){
-			    	console.log(comments[i],'COMMENT PID????');
+//			    	console.log(comments[i],'COMMENT PID????');
 			    	sub='';
 			    	if(comments[i].pid!=0)sub='^';
 			    	//	node['comments'].push(comments[i]);
@@ -296,13 +333,7 @@ function _getComments(nid){
 			    			 comments[i].subject+ ' ' + comments[i].content
 			               );
 			   	}
-		  				//		   	alert('Found ' + comments.length + ' comment(s)!');
-		  		//				  alert('Found ' + subs.length + ' subcomment(s)!');
-		  				//			 variable_set('qview',node);
-		  			//				console.log(subs,'SUBCOMMENTS????');
-		  						
-		  		//		  			 drupalgap_goto('question_view',{reloadPage:true,transition: awri.transition});
-
+		
 					drupalgap_item_list_populate('#comments-'+nid, items);		
 			    }			
 			});
@@ -322,7 +353,7 @@ $('#comments').push(html).trigger('create');
 }
 
 function theme_fbpic(fbfield){
-	if(Drupal.user.uid==0)return '<p>Bitte anmelden</p>';
+	if(Drupal.user.uid==0)return '<p>'+l('Bitte anmelden','user/login')+'</p>';
 	if(fbfield['und']===undefined)
 	    pic='<img src="'+drupalgap_get_path('module','start')+'/anonymous.png" style="border-radius: 50%;"/>';
 	else if(fbfield['und'][0].value>0)

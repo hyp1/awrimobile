@@ -164,8 +164,8 @@ function awri_post_form_validate(form, form_state) {
 		      drupalgap_goto('awri_dashboard');    
 		}
 		
-		 if (form_state.values.message.length < 50)
-		 drupalgap_form_set_error('message', 'Sorry, aber der Text ist zu kurz um ihn zu senden (min.50 Zeichen)!');
+		 if (form_state.values.message.length < 30)
+		 drupalgap_form_set_error('message', 'Sorry, aber der Text ist zu kurz um ihn zu senden (min.30 Zeichen)!');
 		 
 		// else if (test.length < 13)
 		// drupalgap_form_set_error('name', 'Hoppla, der Text ist immmer noch zu

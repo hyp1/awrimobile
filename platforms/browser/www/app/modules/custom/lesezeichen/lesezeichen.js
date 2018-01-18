@@ -60,7 +60,7 @@ function my_module_articles_list_empty(view, variables) {
   // Or...
 
   var content = {};
-  content['msg'] = { markup: t('Sorry, no articles were found.') }
+  content['msg'] = { markup: t('Sorry, no articles were found.') };
   // content['some-other-widget'] = { /* ... */ }
   return content;
 

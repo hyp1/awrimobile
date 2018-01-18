@@ -103,7 +103,7 @@ Drupal.settings.cache.views = {
 // DrupalGap Mode (defaults to 'web-app')
 //  'web-app' - use this mode to build a web application for a browser window
 //  'phonegap' - use this mode to build a mobile application with phonegap
-drupalgap.settings.mode = 'phonegap';
+drupalgap.settings.mode = 'web-app';
 
 // Language Files - locale/[language-code].json
 drupalgap.settings.locale = {
@@ -136,13 +136,13 @@ drupalgap.settings.front = 'start';
 drupalgap.settings.theme = 'easystreet3';
 
 // Logo
-drupalgap.settings.logo = 'images/logo.png';
+drupalgap.settings.logo = 'images/re_logo640.jpg';
 
 // Offline Warning Message. Set to false to hide message.
 drupalgap.settings.offline_message = 'Keine Verbindung zu '+Drupal.settings.site_path+'... !';
 
 // Exit app message.
-drupalgap.settings.exit_message = 'Exit ' + drupalgap.settings.title + '?';
+drupalgap.settings.exit_message = '' + drupalgap.settings.title + ' schliessen?';
 
 // Loader Animations - http://demos.jquerymobile.com/1.4.0/loader/
 drupalgap.settings.loader = {
@@ -289,7 +289,7 @@ drupalgap.settings.menus['main_menu'] = {
  
     {
       title:'Suchen',
-      path:'search/node/',
+      path:'suche',
       options:{
         attributes:{
           'data-icon':'search'
@@ -376,6 +376,7 @@ drupalgap.settings.blocks.easystreet3 = {
 		        mode: 'include'
 		      }	
 	},
+	start_footer: { }
 	 // powered_by: { }
   }
 };

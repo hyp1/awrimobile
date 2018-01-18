@@ -91,12 +91,13 @@ function questions_list_row(view, row, variables) {
 	if (Drupal.settings.debug)
 		console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/),'DEBUG');
 	try {
+		//keine unpublished comments!
 if(row.status==0)return;
-	console.log(row);	
+	
 	if(row.field_fbid===undefined||row.field_fbid==0)
     pic='<img src="'+drupalgap_get_path('module','start')+'/anonymous.png" style="border-radius: 50%;"/>';
    if(row.field_fbid>0)pic='<img src="https://graph.facebook.com/'+row.field_fbid+'/picture?type=small" style="border-radius: 50%;"/>';	
-	if(Drupal.user.uid==0)pic= '<p>Bitte anmelden</p>';
+	if(Drupal.user.uid==0)pic= '<p>'+l('Bitte anmelden','user/login')+'</a></p>';
 
 	//Counter
 		$('#drupalgap_page_title_inhalt').html(
@@ -151,43 +152,5 @@ if(row.status==0)return;
 
 
 
-function test(){
-	
-	var query = {
-			  parameters: {
-			    'type': 'rechtsfrage'
-			  }
-			};
-			node_index(query, {
-			    success:function(nodes){
-			      alert('Indexed ' + nodes.length + ' node(s)!');
-			    }
-			});
-}
 
 
-function suche_search(options) {
-	alert("search");
-	  try {
-		//  options={};
-	    options.method = 'GET';
-	    options.path = 'search_node/retrieve&keys=miete';
-	    options.service = 'drupalgap';
-	    options.resource = 'search_node';
-	    options.contentType = 'application/json';
-	    Drupal.services.call(options);
-	  }
-	  catch (error) {
-	    console.log('suche_search - ' + error);
-	  }
-	}
-
-function dosearch(){
-suche_search({
-    success: function(result) {
-      var user_count = result[0];
-      var msg = 'There are ' + user_count + ' registered user(s)!'
-      drupalgap_alert(msg);
-    }
-});
-};

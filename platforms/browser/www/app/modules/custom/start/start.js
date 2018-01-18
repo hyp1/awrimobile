@@ -47,15 +47,15 @@ function start_page() {
       		  path: 'suche'
       	    }; 
     */
-    
-    content['my_button'] = {
+    /*
+ content['my_button'] = {
   		  theme: 'button',
   		  text: 'Share',
   		  attributes: {
   		    onclick: "socialShare('https://awri.ch');"
   		  }
   		};
-    
+*/    
     content['c2'] = {
     		 theme: 'button_link',
     		  text: 'Rechtsfragen',
@@ -322,7 +322,7 @@ $('#comments').push(html).trigger('create');
 }
 
 function theme_fbpic(fbfield){
-	if(Drupal.user.uid==0)return '<p>Bitte anmelden</p>';
+	if(Drupal.user.uid==0)return '<p><a href="user/login">Bitte anmelden</a></p>';
 	if(fbfield['und']===undefined)
 	    pic='<img src="'+drupalgap_get_path('module','start')+'/anonymous.png" style="border-radius: 50%;"/>';
 	else if(fbfield['und'][0].value>0)
@@ -491,17 +491,17 @@ function socialShare(url){
 	  files: ['', ''], // an array of filenames either locally or remotely
 	  url: url,
 	  chooserTitle: 'Wohin möchten Sie teilen?' // Android only, you can override the default share sheet title
-	}
+	};
 
 	var onSuccess = function(result) {
 	  console.log("Share completed? " + result.completed); // On Android apps mostly return false even while it's true
 	  console.log("Shared to app: " + result.app); // On Android result.app is currently empty. On iOS it's empty when sharing is cancelled (result.completed=false)
-	}
+	};
 
 	var onError = function(msg) {
 	  console.log("Sharing failed with message: " + msg);
 	}
 
 	window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);	
-}
+};
 

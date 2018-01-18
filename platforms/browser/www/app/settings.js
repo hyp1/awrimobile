@@ -142,7 +142,7 @@ drupalgap.settings.logo = 'images/logo.png';
 drupalgap.settings.offline_message = 'Keine Verbindung zu '+Drupal.settings.site_path+'... !';
 
 // Exit app message.
-drupalgap.settings.exit_message = 'Exit ' + drupalgap.settings.title + '?';
+drupalgap.settings.exit_message = '' + drupalgap.settings.title + ' schliessen?';
 
 // Loader Animations - http://demos.jquerymobile.com/1.4.0/loader/
 drupalgap.settings.loader = {
