@@ -277,7 +277,20 @@ drupalgap.settings.menus['user_menu_authenticated'] = {
           'data-icon': 'delete'
         }
       }
-    }
+    },
+    
+    {
+        title:'Info',
+        path:'mobile_info',
+        options:{
+          attributes: {
+            'data-icon': 'grid',
+            'class': 'ui-btn ui-btn-icon-right'
+          }
+        }
+      },
+
+    
   ]
 };
 
@@ -285,16 +298,6 @@ drupalgap.settings.menus['user_menu_authenticated'] = {
 drupalgap.settings.menus['main_menu'] = {
   options: menu_popup_get_default_options(),
   links: [
-          {
-              title:'Info',
-              path:'mobile_info',
-              options:{
-                attributes: {
-                  'data-icon': 'grid',
-                  'class': 'ui-btn ui-btn-icon-right'
-                }
-              }
-            },
           
     {
       title:'Rechtsfragen',

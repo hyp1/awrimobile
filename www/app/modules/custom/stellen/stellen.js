@@ -76,6 +76,7 @@ function gestellt_page() {
 	}
 }
 
+/*
 function stellen_form_alter(form, form_state, form_id) {
 	  try {
 		  
@@ -109,13 +110,42 @@ console.log(form);
 	    
 	  }  catch (error) { console.log('my_module_form_alter - ' + error); }
 }
-
+*/
 
 function awri_post_page() {
-	if(Drupal.user.uid==0)drupalgap_goto('401');
 	
 	var content={};
 	try {
+	
+		if(Drupal.user.uid==0){
+			
+			
+			content['c1'] = {
+					theme:'header',
+					text: 'Sie müssen dazu angemeldet sein!',
+				};
+			
+			content['c2'] = {
+					theme:'button',
+					text: 'Anmelden',
+					attributes:{
+						onclick:"drupalgap_goto(\'user/login\')",
+						'data-theme':'b',
+					}
+			};
+			
+			content['c3'] = {
+					theme:'button',
+					text: 'Zurück',
+					attributes:{
+						onclick:"drupalgap_goto(\'start\')",
+						'data-theme':'b',
+					}
+			}
+			return content;
+			}
+		
+		
 		content['posthead'] = {
 				markup : '<h2>Rechtsfrage stellen(anonym)<dh2>',
 			};
@@ -125,11 +155,11 @@ function awri_post_page() {
 			};
 
 			
-
+/*
 			content['upload_form'] = {
 				markup : drupalgap_get_form('upload_form'),
 			};
-
+*/
 			/*
 			content['file'] = {
 					  theme: 'file',
@@ -214,7 +244,7 @@ function awri_post_form_submit(form, form_state) {
 		variable_set('kanton',  form_state.values.kanton);
 		variable_set('message', form_state.values.message);
 		var msg="Kanton:"+kantone[$('#edit-awri-post-form-kanton').val()]+"\r\n"+form_state.values.message;	
-		_postMessage(variable_get('uid'),msg);
+		_postMessage(Drupal.user.uid,msg);
 		 drupalgap_goto("dashboard");
 	} catch (error) {
 		console.log('awri_post_form_submit - ' + error);

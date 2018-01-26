@@ -20,10 +20,41 @@ function lesezeichen_menu() {
 }
 
 function lesezeichen_page() {
+	 var content = {};
+		try {
+			
+	if(Drupal.user.uid==0){
+		
 	
-	try {
+		content['c1'] = {
+				theme:'header',
+				text: 'Sie müssen dazu angemeldet sein!',
+			};
+		
+		content['c2'] = {
+				theme:'button',
+				text: 'Anmelden',
+				attributes:{
+					onclick:"drupalgap_goto(\'user/login\')",
+					'data-theme':'b',
+				}
+		};
+		
+		content['c3'] = {
+				theme:'button',
+				text: 'Zurück',
+				attributes:{
+					onclick:"drupalgap_goto(\'start\')",
+					'data-theme':'b',
+				}
+		};
+return content;
 
-		  var content = {};
+	}
+
+
+
+		 
 		  
 		  content['header3']={
 			    	theme:'header',

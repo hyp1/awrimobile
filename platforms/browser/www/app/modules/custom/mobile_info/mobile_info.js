@@ -1,10 +1,87 @@
-var isCordovaApp = document.URL.indexOf('http://') === -1
-		&& document.URL.indexOf('https://') === -1;
+function mobile_info_menu() {
+	var items = {};
+	items['mobile_info'] = {
+		title : 'Mobile Info',
+		page_callback : 'mobile_info_page',
+	};
+	return items;
+}
+var device='none';
+
+function mobile_info_page() {
+	  try {
+		  
+		  info=getInfo();
+		  var content = {};
+	    content['my_button'] = {
+	      markup: '<div id="'+dmt_menu_container_id() + '_'
+			+ drupalgap_get_page_id()+'">no results yet!</div>',
+	    };
+	    
+	    content['my_button'] = {
+	  	      markup: '<div id="mobile_info">App Name</div>',
+	  	    };
+	    
+	    content['name'] = {
+	    		  theme: 'textfield',
+	    		  attributes: {
+	    		    value: info.app_name,
+	    		    disabled:'disabled'
+	    		  }
+	    		};
+	    
+	    content['version'] = {
+	    		  theme: 'textfield',
+	    		  attributes: {
+	    		    value:info.app_version,
+	    		    disabled:'disabled'
+	    		  }
+	    		};
+	    
+	    content['mode'] = {
+	    		  theme: 'textfield',
+	    		  attributes: {
+	    		    value: drupalgap.settings.mode,
+	    		    disabled:'disabled'
+	    		  }
+	    		};
+	    
+	    content['device'] = {
+	    		  theme: 'textfield',
+	    		  attributes: {
+	    		    value: info.device_platform,
+	    		    disabled:'disabled'
+	    		  }
+	    		};
+	    
+	    content['uuid'] = {
+	    		  theme: 'textfield',
+	    		  attributes: {
+	    		    value: info_device.uuid,
+	    		    disabled:'disabled'
+	    		  }
+	    		};
+	    
+	    
+	    content['url'] = {
+		  	      markup: '<div id="mobile_infourl">'+l(variable_get('update_url'),variable_get('update_url'))+'</div>',
+		  	    };
+		
+	 
+	    
+	    return content;
+	  }
+	  catch (error) { console.log('d7m_page - ' + error); }
+	}
+
+
+
+
 
 function mobile_info_deviceready() {
-alert("Ready");
-	//	if (isCordovaApp && (drupalgap.settings.mobile_update==undefined||drupalgap.settings.mobile_update.auto == true))
-	//if(drupalgap.settings.mode=='web-app'){
+	
+
+	
 		postInfo({
 			success:function(data){
 				console.log(data);
@@ -13,42 +90,12 @@ alert("Ready");
 				console.log(data);
 			}
 			});
-//	}
-		
-//	mobile_info_check();
-}
-
-
-function mobile_info_check() {	
-	//if (drupalgap.settings.mobile_update.auto == true) {
-		cordova.getAppVersion.getVersionNumber(function(version) {
-			$.getJSON(Drupal.settings.update_url + '/' + version,
-					function(data) {
-						variable_set('app_update_url', data.update_url);
-						variable_set('app_version', version);
-						if (data.version == false)
-							update_show();
-					});
-		});
-		cordova.getAppVersion.getAppName(function(name) {
-			variable_set('app_name', name);
-		});
-	//}
 }
 
 function postInfo(options){
-
-mode=drupalgap.settings.mode;
-//device=(!isCordovaApp||cordova.device==undefined) ? 'Browser':cordova.device;
-device="HALLO";
-app_version="NONE";
-app_name="NONamE";
-//if(variable_get('app_version',null))app_version=null;
-//alert(variable_get('app_name'));
-//if(variable_get('app_name',null)==null)app_name=drupalgap.settings.title;
-
-str='mode='+mode+'&device='+device+'&app_version='+app_version+'&app_name='+app_name;
-alert(str);
+info=getInfo();
+	
+str='mode='+info.mode+'&device='+info.device_platform+'&app_version='+info.app_version+'&app_name='+info.app_name;
 $.ajax({
 		  type: "GET",
 		  url: Drupal.settings.site_path+'/app/info/?'+str,
@@ -56,14 +103,24 @@ $.ajax({
 		});
 }
 
-function info_show() {
-	var update_url = variable_get('app_update_url');
-	var version = variable_get('app_version');
-	var name = variable_get('app_name');
-	var title = "<h2>" + name + "[" + version + "] Update</h2>";
-	var msg = t("Für Ihre Version ist ein Update erhältlich!")
-			+ bl(t("Herunterladen"), update_url, {
-				InAppBrowser : true
-			});
-	drupalgap_set_message(title + msg);
+function getInfo() {
+
+	mode=drupalgap.settings.mode;
+	device="noned";
+	app_version="none";
+	app_name="none";
+	if(variable_get('app_version',null)!==null)app_version=variable_get('app_version');
+	if(device=='none'&&app_version!='none')device='Emulator';
+	if(variable_get('app_name',null)==null)app_name=drupalgap.settings.title;
+	else app_name=variable_get('app_name');
+var info={
+	'mode':mode,
+	'device':device.uuid,
+	'app_name':app_name,
+	'app_version':app_version,
+	'device_uuid':device.uuid,
+	'device_platform':device.platform,		
+};
+
+return info;
 }
