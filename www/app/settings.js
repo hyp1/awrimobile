@@ -12,6 +12,7 @@ Drupal.settings.debug = true;
  * Drupal Settings (provided by jDrupal) |
  ****************************************/
 Drupal.settings.update_url = 'https://awri.ch/app/update';
+Drupal.settings.info_url = 'https://awri.ch/app/info';
 
 /* DRUPAL PATHS */
  
@@ -193,7 +194,7 @@ Drupal.modules.custom['stellen'] = {};
 Drupal.modules.custom['inhalt'] = {};
 Drupal.modules.custom['lesezeichen'] = {};
 Drupal.modules.custom['mobile_update'] = {};
-
+Drupal.modules.custom['mobile_info'] = {};
 
 Drupal.modules.custom['dmt_menu'] = {};
 drupalgap.settings.dmt_menu = {		 
@@ -284,6 +285,17 @@ drupalgap.settings.menus['user_menu_authenticated'] = {
 drupalgap.settings.menus['main_menu'] = {
   options: menu_popup_get_default_options(),
   links: [
+          {
+              title:'Info',
+              path:'mobile_info',
+              options:{
+                attributes: {
+                  'data-icon': 'grid',
+                  'class': 'ui-btn ui-btn-icon-right'
+                }
+              }
+            },
+          
     {
       title:'Rechtsfragen',
       path:'inhalt',

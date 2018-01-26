@@ -12,6 +12,7 @@ Drupal.settings.debug = true;
  * Drupal Settings (provided by jDrupal) |
  ****************************************/
 Drupal.settings.update_url = 'https://awri.ch/app/update';
+Drupal.settings.info_url = 'https://awri.ch/app/info';
 
 /* DRUPAL PATHS */
  
@@ -193,7 +194,7 @@ Drupal.modules.custom['stellen'] = {};
 Drupal.modules.custom['inhalt'] = {};
 Drupal.modules.custom['lesezeichen'] = {};
 Drupal.modules.custom['mobile_update'] = {};
-
+Drupal.modules.custom['mobile_info'] = {};
 
 Drupal.modules.custom['dmt_menu'] = {};
 drupalgap.settings.dmt_menu = {		 
