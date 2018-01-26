@@ -35,11 +35,81 @@ function stellen_menu() {
 		title : "Rechtsfrage stellen",
 		page_callback : "awri_post_page",
 		};
+		
+		items['gestellt'] = {
+		title : "Ihre Frage wurde gesendet",
+		page_callback : "gestellt_page",
+		};
+		
 		return items;
 	} catch (error) {
 		console.log('awri_post_menu- ' + error);
 	}
 }
+
+function gestellt_page() {
+
+	try {
+		var content={};
+		content['c1'] = {
+				theme:'header',
+				text: 'Ihre Rechtsfrage wurde nach AWRI gepostet.',
+			};
+
+		content['c2'] = {
+				markup:'<h3>Einer unserer Admins wird die Rechtsfrage für Sie anonym ins Rechtsforum Schweiz stellen</h3><h3>Viel Glück!</h3>',				
+			};
+
+		content['c4'] = {
+				  theme: 'button',
+				  text: 'Weiter',
+				  attributes: {
+				    onclick: "drupalgap_goto(drupalgap.settings.front)",
+				    'data-theme':'b',
+				    'data-icon':'arrow-r'
+				  }
+				};
+		
+		return content;
+	} catch (error) {
+		console.log('awri_post_page - ' + error);
+	}
+}
+
+function stellen_form_alter(form, form_state, form_id) {
+	  try {
+		  
+console.log(form);
+
+	    if (form_id == 'node_edit' && form.bundle == 'rechtsfrage') {
+	    	console.log(form.elements);
+
+	    	form.elements.field_fbname['de'][0].value=Drupal.user.name;		      		      		
+	    	form.elements.field_fbname.prefix='<div style="display: none;">';
+	    	form.elements.field_fbname.suffix='</div>';
+	    	
+	    	form.elements.title.value="Anonyme Frage";
+	    	form.elements.title.prefix='<div style="display: none;">';
+	    	form.elements.title.suffix='</div>';
+	    	
+	    	form.elements.field_anonym.access=false;
+	    	form.elements.field_bewertung.access=false;
+	    	form.elements.field_fbcomments.access=false;
+	    	form.elements.field_fbcreated.access=false;
+	    	form.elements.field_fbid.access=false;
+	    	form.elements.field_fblikes.access=false;
+	    	form.elements.field_fbmid.access=false;
+	    	form.elements.field_fburl.access=false;
+	    	form.elements.field_fbshares.access=false;
+	    if(drupalgap.settings.mode=='web-app')form.elements.field_image.access=false;
+
+	    form.action = 'gestellt';		  
+	    }
+	      	
+	    
+	  }  catch (error) { console.log('my_module_form_alter - ' + error); }
+}
+
 
 function awri_post_page() {
 	if (Drupal.settings.debug)
@@ -54,6 +124,31 @@ function awri_post_page() {
 				markup : drupalgap_get_form('awri_post_form'),
 			};
 
+			
+
+			content['upload_form'] = {
+				markup : drupalgap_get_form('upload_form'),
+			};
+
+			/*
+			content['file'] = {
+					  theme: 'file',
+					  text: 'My Button',
+					  id:'file1',
+					  attributes: {
+					//    onclick: "drupalgap_alert('You clicked me!');"
+					  }
+					};
+			
+			content['up'] = {
+					  theme: 'button',
+					  text: 'Upload',
+					  attributes: {
+						  id:'upload1',
+					    onclick: "upload();"
+					  }
+					};
+			*/
 			content['postfoot'] = {
 					markup : '</br></br>',
 				};
@@ -77,42 +172,14 @@ function awri_post_form(form, form_state) {
 		form.elements['kanton'] = {
 			title : 'Kanton',
 			type : 'select',
-			options : {
-				0 : 'K.A.',
-				1 : 'Aargau',
-				2 : 'Appenzell Ausserrhoden',
-				3 : 'Appenzell Innerrhoden',
-				4 : 'Basel-Land',
-				5 : 'Basel-Stadt',
-				6 : 'Bern',
-				7 : 'Fribourg/Freiburg',
-				8 : 'Genève/Genf',
-				9 : 'Glarus',
-				10 : 'Graubünden/Grischuns/Grigioni',
-				11 : 'Jura',
-				12 : 'Luzern',
-				13 : 'Neuchâtel/Neuenburg',
-				14 : 'Nidwalden',
-				15 : 'Obwalden',
-				16 : 'St.Gallen',
-				17 : 'Schaffhausen',
-				18 : 'Schwyz',
-				19 : 'Solothurn',
-				20 : 'Thurgau',
-				21 : 'Ticino/Tessin',
-				22 : 'Uri',
-				23 : 'Vaud/Waadt',
-				14 : 'Valais/Wallis',
-				25 : 'Zug',
-				26 : 'Zürich',
-			},
+			options : kantone,
 			default_value : variable_get('kanton')
 		};
 		// DARF KEINE VALUE HABEN??
 		form.elements['message'] = {
 			type : 'textarea',
 			title : 'Es geht um folgenden Sachverhalt...',
-			required : true,
+			//required : true,
 			title_placeholder : true,
 
 		};
@@ -208,6 +275,96 @@ function _postMessage(uid,message) {
 	
 }
 
+function doit(options) {
+
+	  try {
+	    options.method = 'POST';
+	    options.path = 'file.json';
+	    options.service = 'file';
+	    options.contentType = 'multipart/form-data';
+	    resource : 'drupalgap'
+	    options.data=
+	    Drupal.services.call(options);
+	  }
+	  catch (error) {
+	    console.log('my_module_get_user_count - ' + error);
+	  }
+	}
+
+function upload_form_submit(form, form_state) {
+try{
+	console.log(form_state);
+	var formData = JSON.stringify(form);
+	console.log(form.serialize(form));
+	
+	doit({});
+	  }
+	  catch (error) {
+	    console.log('my_module_get_user_count - ' + error);
+	  }
+	}
+
+function upload_form(form, form_state) {
+	  try {
+		  
+	    form.elements['name'] = {
+	      type: 'file',
+	      //required: true
+	      attributes:{
+	    	  id:'upload'
+	      }
+	    };
+	    form.elements['submit'] = {
+	      type: 'submit',
+	      value: 'Say Hello',
+	    	     attributes:{
+	   	    	  id:'sub'
+	   	      }
+	    };
+		
+
+	    return form;
+	  }
+	  catch (error) { console.log('my_module_custom_form - ' + error); }
+	}
+
+function upload(){
+	
+	myFile = $('#file1').prop('files');
+
+	console.log(JSON.stringify(myFile));
+	
+	/*
+	my_module_get_user_count({success:function(data){
+		
+		console.log(data);
+	}});
+	*/
+};
+
+function my_module_get_user_count(options) {
+	  try {
+	    options.method = 'POST';
+	    options.path = 'file.json';
+	    options.service = 'file';
+	    options.contentType= 'application/json';
+	    options.args=JSON.stringify($('#file1'));
+	    Drupal.services.call(options);
+	  }
+	  catch (error) {
+	    console.log('my_module_get_user_count - ' + error);
+	  }
+	}
+/*
+
+my_module_get_user_count({
+	    success: function(result) {
+	      var user_count = result[0];
+	      var msg = 'There are ' + user_count + ' registered user(s)!'
+	      drupalgap_alert(msg);
+	    }
+	});
+*/
 
 /*
 function stellen_form_alter(form, form_state, form_id) {

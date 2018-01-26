@@ -11,6 +11,7 @@ Drupal.settings.debug = true;
 /****************************************|
  * Drupal Settings (provided by jDrupal) |
  ****************************************/
+Drupal.settings.update_url = 'http://kimo2007.dnshome.de:8888/rhfappd7/app/update';
 
 /* DRUPAL PATHS */
  
@@ -133,8 +134,12 @@ drupalgap.settings.title = 'AWRIMobile';
 drupalgap.settings.front = 'start';
 
 // Theme
-drupalgap.settings.theme = 'easystreet3';
-
+drupalgap.settings.theme = 'app_theme';
+drupalgap.theme = {
+		    theme_header: 'b',
+		    theme_content: 'a',
+		    theme_footer: 'b',
+		  };
 // Logo
 drupalgap.settings.logo = 'images/re_logo640.jpg';
 
@@ -169,7 +174,6 @@ drupalgap.settings.loader = {
 
 /** Contributed Modules - www/app/modules **/
 
-//Drupal.modules.contrib['example'] = {};
 Drupal.modules.contrib['facebook'] = {};
 Drupal.modules.contrib['date'] = {};
 Drupal.modules.contrib['fivestar'] = {};
@@ -178,17 +182,17 @@ Drupal.modules.contrib['avatar'] = {};
 Drupal.modules.contrib['entityreference'] = {};
 Drupal.modules.contrib['pathfix'] = {};
 Drupal.modules.contrib['media'] = {};
-Drupal.modules.contrib['geofield'] = {};
-Drupal.modules.contrib['addressfield'] = {};
+
 
 /** Custom Modules - www/app/modules/custom **/
 
-//Drupal.modules.custom['map'] = {};
+;
 Drupal.modules.custom['start'] = {};
 Drupal.modules.custom['suche'] = {};
 Drupal.modules.custom['stellen'] = {};
 Drupal.modules.custom['inhalt'] = {};
 Drupal.modules.custom['lesezeichen'] = {};
+
 
 Drupal.modules.custom['dmt_menu'] = {};
 drupalgap.settings.dmt_menu = {		 
@@ -200,9 +204,12 @@ drupalgap.settings.dmt_menu = {
            "class": 'ui-btn-left',  //ui-btn-right         	                
           }
           };
-/** Custom Modules - www/app/modules/custom **/
 
-//Drupal.modules.custom['my_module'] = {};
+Drupal.modules.custom['mobile_update'] = {};
+drupalgap.settings.mobile_update = {
+	auto:true
+};
+
 
 /***************************************|
  * Menus - http://drupalgap.org/node/85 |
@@ -306,6 +313,16 @@ drupalgap.settings.menus['main_menu'] = {
           }
         }
       },
+      
+      {
+          title:'Lesezeichen',
+          path:'lesezeichen',
+          options:{
+            attributes:{
+              'data-icon':'tag'
+            }
+          }
+        },
     
     {
       title:'Taxonomy',
@@ -316,17 +333,6 @@ drupalgap.settings.menus['main_menu'] = {
         }
       }
     },
-    /*
-    {
-      title:'Users',
-      path:'user-listing',
-      options:{
-        attributes:{
-          'data-icon':'info'
-        }
-      }
-    }
-    */
   ]
 };
 
@@ -336,7 +342,7 @@ drupalgap.settings.menus['main_menu'] = {
 drupalgap.settings.blocks = {}; // Do not remove this line.
 
 // Easy Street 3 Theme Blocks
-drupalgap.settings.blocks.easystreet3 = {
+drupalgap.settings.blocks.app_theme = {
   header: {
     user_menu_anonymous: {
       roles: {
@@ -344,6 +350,7 @@ drupalgap.settings.blocks.easystreet3 = {
         mode: 'include',
       }
     },
+    inhalt_block:{},
     user_menu_authenticated: {
       roles: {
         value: ['authenticated user'],
@@ -353,22 +360,18 @@ drupalgap.settings.blocks.easystreet3 = {
     main_menu: { }
   },
   sub_header: {
-    title: { }
+    title: { },
+ 
   },
   navigation: {
-    primary_local_tasks: { }
+    primary_local_tasks: { },
   },
   content: {
     messages: { },
-
-   // search: {
-   //   pages: {
-   //     value: ['dashboard'],
-   //     mode: 'include'
-   //   }
-   // },
     main: { },
+
   },
+
   footer: {
 	  dmt_menu: {
 		   pages: {
@@ -376,10 +379,17 @@ drupalgap.settings.blocks.easystreet3 = {
 		        mode: 'include'
 		      }	
 	},
-	start_footer: { }
+//	start_footer: { },
 	 // powered_by: { }
+    control_block:{
+   	 pages: {
+   	        value: ['inhalt','node/*'],
+   	        mode: 'include'
+   	      }
+   },
   }
 };
+
 
 /****************************************************|
  * Region Menu Links - http://drupalgap.org/node/173 |
@@ -448,10 +458,12 @@ drupalgap.settings.menus.regions['header'] = {
   ]
 };
 
+
 // Footer Region Links
 drupalgap.settings.menus.regions['footer'] = {
   links: [      
     /* Back Button */
+    
     {
       options: {
         attributes: {
@@ -462,10 +474,11 @@ drupalgap.settings.menus.regions['footer'] = {
         }
       },
       pages: {
-        value: [''],
-        mode: 'exclude'
+        value: ['suche','lesezeichen'],
+        mode: 'include'
       }
     },
+    
   ],
 };
 

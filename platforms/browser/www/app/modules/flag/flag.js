@@ -324,6 +324,7 @@ function theme_flag(variables) {
  */
 function flag_is_flagged(flag_name, entity_id, uid, options) {
   try {
+	  console.log(options);
     options.method = 'POST';
     options.path = 'flag/is_flagged.json';
     options.service = 'flag';

@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-    
-      <title>AWRIMobile</title>
-
+      <title>AWRI - Alles was Recht ist</title>
       <meta charset="utf-8" />
       <meta name="format-detection" content="telephone=no" />
       <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
@@ -18,20 +16,23 @@
       <!-- jDrupal -->
       <script type="text/javascript" charset="utf-8" src="jdrupal-7.0.5.min.js"></script>
       <!-- DrupalGap -->
-      <script type="text/javascript" charset="utf-8" src="bin/drupalgap-7.0.2.min.js"></script>
+      <script type="text/javascript" charset="utf-8" src="bin/drupalgap.js"></script>
       <script type="text/javascript" charset="utf-8" src="app/settings.js"></script>
       <link rel="stylesheet" href="css/drupalgap.css" />
-
-      <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALG7XUaPx559b4HAGIJh1fL4MWAFeLMQQ"></script>
-
+      
+              <!-- Themeroller Files 
+         <link rel="stylesheet" href="css/app.min.css" />
+         <link rel="stylesheet" href="css/app.icons.min.css" />
+         --> 
+                  
+             <!-- App Theme CSS  --> 
+        <link rel="stylesheet" href="app/themes/app_theme/css/app_theme.css" />      
+      
     </head>
     <body>
-<!-- Load Cordova -->
-<script src="cordova.js"></script>
-
       <!-- Mobile Application Splash Screen -->
       <div id="_drupalgap_splash" data-role="page">
-         <div data-role="header" data-theme="b"><h2>AWRIMobile</h2></div>
+         <div data-role="header" data-theme="b"><h2>AWRI</h2></div>
          <div class="ui-content" data-role="content">
             <div id="_drupalgap_splash_content">
               <img src="images/logo.png" alt="AWRI" style="position: absolute; top: 50%; left: 50%; margin-left: -64px; margin-top: -64px;" />
@@ -42,8 +43,11 @@
 <script src="openfb.js"></script>
 
 <script type="text/javascript" charset="utf-8">
-openFB.init({appId:'126766317359254'});
+openFB.init({appId:'126766317359254',scope:'email'});
     </script>
+
+<!-- Load Cordova  -->
+<script src="cordova.js"></script>
 
       <!-- Load DrupalGap -->
       <script type="text/javascript">
