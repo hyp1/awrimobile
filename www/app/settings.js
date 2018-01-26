@@ -192,6 +192,7 @@ Drupal.modules.custom['suche'] = {};
 Drupal.modules.custom['stellen'] = {};
 Drupal.modules.custom['inhalt'] = {};
 Drupal.modules.custom['lesezeichen'] = {};
+Drupal.modules.custom['mobile_update'] = 
 
 
 Drupal.modules.custom['dmt_menu'] = {};
