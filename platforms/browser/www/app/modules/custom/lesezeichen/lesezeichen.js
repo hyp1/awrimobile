@@ -8,6 +8,10 @@ function lesezeichen_menu() {
 		title : 'Ihre Lesezeichen <span class="ui-li-count" id="bookmark-cnt">0</span>',
 		page_callback : "lesezeichen_page",
 	//    pageshow : "lesezeichen_pageshow",
+		 roles: {
+		        value: ['authenticated user'],
+		        mode: 'include',
+		      }
 		};
 		return items;
 	} catch (error) {
@@ -16,8 +20,6 @@ function lesezeichen_menu() {
 }
 
 function lesezeichen_page() {
-	if (Drupal.settings.debug)
-		console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/),'DEBUG');
 	
 	try {
 
@@ -107,7 +109,7 @@ function _addBookmark(nid){
 		 {
       success: function(result) {
         try {
-           	console.log(result,'add ok'+nid);
+       
      	   setFlag(1);
  	      $('#bookmark').attr('data-theme', 'b').removeClass('ui-btn-inactive')
 	      .addClass('ui-btn-active').trigger('create');

@@ -50,11 +50,11 @@ function start_page() {
 			columns : 2,
 			items : [ bl('Rechtsfragen', 'inhalt',{attributes:{'data-icon':'grid'}}), 
 			          bl('Suchen', 'suche',{attributes:{'data-icon':'search'}}),
-					bl('Lesenzeichen', 'lesezeichen', {
+			       	bl('Lesenzeichen', 'lesezeichen', {
 						attributes:{'data-icon':'tag'},
-						'reloadPage' : 'true'
+						'reloadPage' : 'true',						 
 					}), 
-					bl('Rechtsfrage stellen', 'node/add/rechtsfrage',{attributes:{'data-icon':'action'}}),
+					bl('Rechtsfrage stellen', 'stellen',{attributes:{'data-icon':'action'}}),
 			// bl('Rechtsfrage stellen', 'node/add/rechtsfrage'),
 			]
 		};
@@ -62,12 +62,12 @@ function start_page() {
 		content['gride'] = {
 			theme : 'header',
 			text : 'Neueste'
-		}
+		};
 
 		content['grid'] = {
 			theme : 'view',
-			format : 'grid',
-			columns : 2,
+			//format : 'u',
+			//columns : 1,
 			path : 'drupalgap/views_datasource/drupalgap_content',
 			row_callback : 'start_list_row',
 			empty_callback : 'start_list_empty',
@@ -281,7 +281,7 @@ function theme_controls() {
 		 +'<a href="#" onclick="javascript:drupalgap_goto(\'suche\', {});" data-icon="search">Suchen</a>'
 		 +'</li>'
 		 + '<li class="ui-block-c">'
-		 +'<a href="#" onclick="javascript:drupalgap_goto(\'node/add/rechtsfrage\', {});" data-icon="action">Frage stellen</a>'
+		 +'<a href="#" onclick="javascript:drupalgap_goto(\'stellen\', {});" data-icon="action">Frage stellen</a>'
 		 +'</li>'
 		 + '<li class="ui-block-d">'
 		 +'<a href="#" id="bookmark_btn" onclick="javascript:drupalgap_goto(\'lesezeichen\', {});" data-icon="tag">Lesezeichen</a>'
@@ -587,8 +587,8 @@ function _countFlags(nid,elem) {
 			try {
 				// Check options.entity_type and/or options.bundle here to
 				
-				$(elem).text(result.count);
-			
+				$('#global_bookmark_cnt').text(result.count);
+		
 			} catch (error) {
 				console.log('_countFlags:flag_countall - success - ' + error);
 			}
@@ -611,9 +611,8 @@ function _isBookmark(nid,elem) {
 				 }
 				 else{
 					 if(result.count>0)alert(result.count);
-					 //$(elem).html(result.count);
 						setFlag(1);
-						$(elem).html(result);
+//result is true or false		$(elem).html(result);
 				 }
 			
 				
@@ -690,7 +689,7 @@ function _getSocialHTML(url){
 	social+='<li data-icon="googleplus"><a  data-iconpos="notext" href="https://plus.google.com/share?url='+url+'" target="_NEW">Google Plus</a></li>';
 	social+='<li data-icon="twitter"><a  href="https://twitter.com/intent/tweet?url='+url+'" target="_NEW">Twitter</a></li>';
 	social+='<li data-icon="mail"><a href="mailto:?subject=Rechtsforum Schweiz Beitrag&body='+url+'" target="_NEW">Email	</a></li>';
-	social+='<li data-icon="rss" class="ui-last-child"><a href="https://awri.ch/rss.xml" target="_NEW">RSS</a></li>';
+	social+='<li data-icon="rss" class="ui-last-child"><a href="https://awri.ch/rss.xml" target="_NEW">RSS abonnieren</a></li>';
 	
 	//	social+='<li><a data-iconpos="right" href="https://awri.ch/rss.xml" class="ui-link ui-btn ui-icon-rss ui-btn-icon-notext ui-shadow ui-corner-all ui-first-child" target="_NEW">&nbsp;</a></li>';
 //	social+='<li><a data-iconpos="notext" href="https://www.facebook.com/sharer/sharer.php?u=https://awri.ch/mobile" class="ui-link ui-btn ui-icon-facebook ui-btn-icon-notext ui-shadow ui-corner-all" target="_NEW">&nbsp;</a></li>';

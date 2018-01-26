@@ -86,16 +86,14 @@ function inhalt_list_row(view, row, variables) {
 	var content={};	
 	theme_controls();
 	
-	mark=''+
-	'<a href="#" id="bookmark_toggle" class="inactive" onclick="_toggleBookmark('+row.nid+')" data-role="button" data-icon="tag" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c""><span class="ui-btn-inner ui-btn-corner-all"><span id="isbookmark" class="ui-btn-text">false</span><span class="ui-icon ui-icon-delete ui-icon-shadow">&nbsp;</span></span></a>';
-
-	mark2=''+
-	'<a id="bookmark_cnt" href="#" data-role="button" data-icon="comment" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c""><span class="ui-btn-inner ui-btn-corner-all"><span id="comment_tag" class="ui-btn-text">'+row.comment_count+'</span><span class="ui-icon ui-icon-delete ui-icon-shadow">&nbsp;</span></span></a>';
-
+	if(Drupal.user.uid==0)mark='';
+	else mark=
+	'<a href="#" id="bookmark_toggle" class="inactive" onclick="_toggleBookmark('+row.nid+')" data-role="button" data-icon="tag" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c""><span class="ui-btn-inner ui-btn-corner-all"><span id="isbookmark" class="ui-btn-text"></span><span class="ui-icon ui-icon-delete ui-icon-shadow">&nbsp;</span></span></a>';
+	
 	mark3=''+
-	'<a id="facebookl" href="javascript:window.open(\'https://facebook.com/'	+ node.fbmid + '\', \'_system\', \'location=yes\');" data-role="button" data-icon="awri32" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c""><span class="ui-btn-inner ui-btn-corner-all"><span>&nbsp;</span></span></a>';
+	'<a id="awril" href="javascript:window.open(\'https://awri.ch/node/'	+ node.nid + '\', \'_system\', \'location=yes\');" data-role="button" data-icon="awri32" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c""><span class="ui-btn-inner ui-btn-corner-all"><span>&nbsp;</span></span></a>';
 	mark4=''+
-	'<a id="awril" href="javascript:window.open(\'https://awri.ch/node/'	+ node.fbmid + '\', \'_system\', \'location=yes\');" data-role="button" data-icon="facebook" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c""><span class="ui-btn-inner ui-btn-corner-all"><span>&nbsp;</span></span></a>';
+	'<a id="facebook" href="javascript:window.open(\'https://facebook.com/'	+ node.fbmid + '\', \'_system\', \'location=yes\');" data-role="button" data-icon="facebook" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c""><span class="ui-btn-inner ui-btn-corner-all"><span>&nbsp;</span></span></a>';
 
 	
 	mark5='<a onclick="share(\'https://awri.ch/node/'+row.nid+'\');" data-role="button" data-icon="link" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c""><span class="ui-btn-inner ui-btn-corner-all"><span>&nbsp;</span></span></a>'+
@@ -106,14 +104,13 @@ _getSocialHTML('https://awri.ch/node/'+row.nid);
 	'</ul>'+
 '</div>";';
 	
-	
-	content.card={
+		content.card={
 			markup:'<div data-role="collapsible" data-inset="true" data-collapsed="false" data-iconpos="left">'+    
 //    '<h2><img src="'+drupalgap_get_path('theme','app_theme')+'/images/anonymous.png" id="node_picture" width="28" height="28">&nbsp;&nbsp;&nbsp;'+row.field_fbname+'</h2><p id="body">'+row.title+'</p>'+
     '<h2>'+theme_pic(row.field_fbid,28,28)+'&nbsp;&nbsp;&nbsp;'+row.field_fbname+
     '<span class="ui-li-count ui-btn-up-c ui-btn-corner-all">'+row.comment_count+'</span>'+
-    '</h2><p id="body"><div>'+theme_pic(row.field_fbid,70,70)+'</div>'+row.body+'</p></div>'+mark
-    +mark2+mark3+mark4+mark5
+    '</h2><div><p id="body"><div>'+theme_pic(row.field_fbid,70,70)+'</div>'+row.body+'</p></div>'+mark
+    +mark3+mark4+mark5
 	+'</div>'
 	};
 	
@@ -143,11 +140,9 @@ content['countb']={
 };	
 
 
-//$('#book').attr(variables).trigger('create');
 
-$('#inhalt_top,h3.my-css-class').html((1+view.page)+'/'+view.pages+' - '+row.flagged).trigger('create');	
+$('#inhalt_top,h3.my-css-class').html((1+view.page)+'/'+view.pages).trigger('create');	
 
-//setFlag(row.flagged);
 return drupalgap_render(content);
 }
 
@@ -275,7 +270,7 @@ if(row.flagged==0){
 
 function inhalt_node_page_view_alter_rechtsfrage(node, options) {
 	  try {	
-	
+		  variable_set('node',node);
 		  if(node.field_fbname['und']===undefined)name=node.name;
 		  else name=node.field_fbname['und'][0].value;
 	
@@ -291,6 +286,10 @@ function inhalt_node_page_view_alter_rechtsfrage(node, options) {
 	      attributes: { 'data-collapsed': 'false' }
 	    };  	    	    
 
+//	    content['c2']={
+//	    		markup:'<a id="global_bookmark_cnt" href="#" data-role="button" data-icon="tag" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c""><span class="ui-btn-inner ui-btn-corner-all"><span id="global_bookmark_cnt" class="ui-btn-text">0</span> <small>Benutzer haben dieses Lesezeichen gesetzt</small></span></a>'
+//	    }
+	    
 	    content['c0'] = {
 	    		  theme: 'jqm_item_list',
 	    		  title: 'Antworten',
@@ -306,7 +305,7 @@ function inhalt_node_page_view_alter_rechtsfrage(node, options) {
 	    
 
 	  
-	     content['c3']=theme_lesezeichen_button(node.nid),
+	//     content['c3']=theme_lesezeichen_button(node.nid),
 	     
 
 	    options.success(content);
@@ -335,7 +334,7 @@ function _getComments(nid){
 			    	for(var i=0;i<comments.length;i++){
 //			    	console.log(comments[i],'COMMENT PID????');
 			    	sub='';
-			    	if(comments[i].pid!=0)sub='^';
+			    	if(comments[i].pid!=0)sub='<div "subcomment"><a href="#" class="ui-btn ui-icon-comment ui-btn-icon-notext ui-btn-inline ui-mini ui-corner-all">No text</a></div>';
 			    	//	node['comments'].push(comments[i]);
 			    	//else subs.push(comments[i]);
 		  			 //variable_set('subcomments',subs);

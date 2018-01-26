@@ -66,8 +66,8 @@ function start_page() {
 
 		content['grid'] = {
 			theme : 'view',
-			format : 'grid',
-			columns : 2,
+			//format : 'u',
+			//columns : 1,
 			path : 'drupalgap/views_datasource/drupalgap_content',
 			row_callback : 'start_list_row',
 			empty_callback : 'start_list_empty',

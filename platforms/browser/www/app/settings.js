@@ -11,7 +11,7 @@ Drupal.settings.debug = true;
 /****************************************|
  * Drupal Settings (provided by jDrupal) |
  ****************************************/
-Drupal.settings.update_url = 'http://kimo2007.dnshome.de:8888/rhfappd7/app/update';
+Drupal.settings.update_url = 'https://awri.ch/app/update';
 
 /* DRUPAL PATHS */
  
@@ -192,6 +192,7 @@ Drupal.modules.custom['suche'] = {};
 Drupal.modules.custom['stellen'] = {};
 Drupal.modules.custom['inhalt'] = {};
 Drupal.modules.custom['lesezeichen'] = {};
+Drupal.modules.custom['mobile_update'] = {};
 
 
 Drupal.modules.custom['dmt_menu'] = {};
@@ -306,7 +307,7 @@ drupalgap.settings.menus['main_menu'] = {
     
     {
         title:'Frage stellen',
-        path:'node/add/rechtsfrage',
+        path:'stellen',
         options:{
           attributes:{
             'data-icon':'comment'

@@ -112,8 +112,8 @@ console.log(form);
 
 
 function awri_post_page() {
-	if (Drupal.settings.debug)
-		console.log(arguments.callee.toString().match(/function\s+([^\s\(]+)/),'DEBUG');
+	if(Drupal.user.uid==0)drupalgap_goto('401');
+	
 	var content={};
 	try {
 		content['posthead'] = {

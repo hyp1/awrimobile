@@ -7,7 +7,6 @@ function mobile_update_deviceready() {
 }
 
 function mobile_update_check() {	
-	
 	//if (drupalgap.settings.mobile_update.auto == true) {
 		cordova.getAppVersion.getVersionNumber(function(version) {
 			$.getJSON(Drupal.settings.update_url + '/' + version,

@@ -1,5 +1,6 @@
 function app_theme_info() {
-drupalgap_add_css(drupalgap_get_path('theme','app_theme')+'/css/icons.css');
+
+	drupalgap_add_css(drupalgap_get_path('theme','app_theme')+'/css/icons.css');
   // Init an empty theme object.
   var theme = {};
 
