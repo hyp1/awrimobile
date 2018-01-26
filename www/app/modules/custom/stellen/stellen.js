@@ -1,3 +1,6 @@
+//Dieser user postet ins Forum
+var admin_user=3;
+
 var kantone=['K.A.',
              'Aargau',
              'Appenzell Ausserrhoden',
@@ -244,7 +247,7 @@ function awri_post_form_submit(form, form_state) {
 		variable_set('kanton',  form_state.values.kanton);
 		variable_set('message', form_state.values.message);
 		var msg="Kanton:"+kantone[$('#edit-awri-post-form-kanton').val()]+"\r\n"+form_state.values.message;	
-		_postMessage(Drupal.user.uid,msg);
+		_postMessage(admin_user,msg);
 		 drupalgap_goto("dashboard");
 	} catch (error) {
 		console.log('awri_post_form_submit - ' + error);
