@@ -151,9 +151,9 @@ function fivestar_field_formatter_view(entity_type, entity, field, instance, lan
     // inject it into the fivestar element container.
     // @see https://drupal.org/node/1308114
     if (item_count == 0 && entity_type == 'node') {
-      var container_id = fivestar_container_id(entity_type, entity[key], 0, field.field_name);
+    	var container_id = fivestar_container_id(entity_type, entity[key], 0, field.field_name);
       element[0] = {
-        markup: _fivestar_field_formatter_view(entity_type, entity, field, instance, langcode, items, display, container_id, key, null, 0)
+        markup: _fivestar_field_formatter_view(entity_type, entity, field, instance, langcode, items, display, container_id, key, null, 1)
       };
     }
     return element;

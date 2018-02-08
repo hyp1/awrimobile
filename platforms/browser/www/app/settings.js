@@ -132,8 +132,8 @@ drupalgap.settings.facebook = {
 drupalgap.settings.title = 'AWRIMobile';
  
 // App Front Page
-drupalgap.settings.front = 'start';
-
+drupalgap.settings.front = 'suche';
+//drupalgap.settings.front = 'testpubsub';
 // Theme
 drupalgap.settings.theme = 'app_theme';
 drupalgap.theme = {
@@ -153,17 +153,17 @@ drupalgap.settings.exit_message = '' + drupalgap.settings.title + ' schliessen?'
 // Loader Animations - http://demos.jquerymobile.com/1.4.0/loader/
 drupalgap.settings.loader = {
   loading: {
-    text: 'Loading...',
+    text: 'Lade...',
     textVisible: true,
     theme: 'b'
   },
   saving: {
-    text: 'Saving...',
+    text: 'Speichere...',
     textVisible: true,
     theme: 'b'
   },
   deleting: {
-    text: 'Deleting...',
+    text: 'Lösche...',
     textVisible: true,
     theme: 'b'
   }
@@ -193,8 +193,15 @@ Drupal.modules.custom['suche'] = {};
 Drupal.modules.custom['stellen'] = {};
 Drupal.modules.custom['inhalt'] = {};
 Drupal.modules.custom['lesezeichen'] = {};
-Drupal.modules.custom['mobile_update'] = {};
-Drupal.modules.custom['mobile_info'] = {};
+//Drupal.modules.custom['mobile_update'] = {};
+//Drupal.modules.custom['mobile_info'] = {};
+
+//Drupal.modules.custom['speech'] = {};
+//Drupal.modules.custom['nodetest'] = {};
+//Drupal.modules.custom['nodeedit'] = {};
+Drupal.modules.custom['upload'] = {};
+Drupal.modules.custom['createfrage'] = {};
+Drupal.modules.custom['testpubsub'] = {};
 
 Drupal.modules.custom['dmt_menu'] = {};
 drupalgap.settings.dmt_menu = {		 
@@ -297,8 +304,8 @@ drupalgap.settings.menus['user_menu_authenticated'] = {
 // Main Menu
 drupalgap.settings.menus['main_menu'] = {
   options: menu_popup_get_default_options(),
-  links: [
-          
+  links: [          
+            
     {
       title:'Rechtsfragen',
       path:'inhalt',
@@ -322,7 +329,7 @@ drupalgap.settings.menus['main_menu'] = {
     
     {
         title:'Frage stellen',
-        path:'stellen',
+        path:'createfrage',
         options:{
           attributes:{
             'data-icon':'comment'
@@ -399,7 +406,7 @@ drupalgap.settings.blocks.app_theme = {
 	 // powered_by: { }
     control_block:{
    	 pages: {
-   	        value: ['inhalt','node/*'],
+   	        value: ['inhalt','node/*','suche','createfrage'],
    	        mode: 'include'
    	      }
    },
@@ -428,12 +435,14 @@ drupalgap.settings.menus.regions['header'] = {
     },
     /* Home Button */
     {
-      path: '',
+      path: '#',
       options: {
         attributes: {
           'data-icon': 'home',
           'data-iconpos': 'notext',
-          'class': 'ui-btn-left'
+          'class': 'ui-btn-left',
+          'onclick':"pubsub.trigger('main-menu-clicked', { 'page':'root','action':'Home' } )",
+
         }
       },
       pages: {

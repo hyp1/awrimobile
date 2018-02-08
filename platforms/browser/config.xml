@@ -6,7 +6,7 @@
     <feature name="Camera">
         <param name="browser-package" value="Camera" />
     </feature>
-    <name>AwriMobile</name>
+    <name>AWRI Mobile</name>
     <description>
         Alles was Recht ist. Schweizer Datenbank für Rechtsfragen
     </description>
@@ -21,6 +21,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <icon src="icon.png" />
+    <icon src="res/icon.png" />
+    <splash src="res/screen/android/1280x1280.png" />
     <preference name="phonegap-version" value="cli-7.1.0" />
 </widget>

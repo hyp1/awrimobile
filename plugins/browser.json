@@ -48,6 +48,15 @@
         },
         "cordova-plugin-app-version": {
             "PACKAGE_NAME": "ch.awri.mobile"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "ch.awri.mobile"
+        },
+        "cordova-plugin-speechrecognition": {
+            "PACKAGE_NAME": "ch.awri.mobile"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "ch.awri.mobile"
         }
     },
     "dependent_plugins": {

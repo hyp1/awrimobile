@@ -376,6 +376,38 @@ module.exports = [
     "clobbers": [
       "cordova.getAppVersion"
     ]
+  },
+  {
+    "id": "cordova-plugin-splashscreen.SplashScreen",
+    "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+    "pluginId": "cordova-plugin-splashscreen",
+    "clobbers": [
+      "navigator.splashscreen"
+    ]
+  },
+  {
+    "id": "cordova-plugin-speechrecognition.SpeechRecognition",
+    "file": "plugins/cordova-plugin-speechrecognition/www/speechRecognition.js",
+    "pluginId": "cordova-plugin-speechrecognition",
+    "merges": [
+      "window.plugins.speechRecognition"
+    ]
+  },
+  {
+    "id": "cordova-plugin-file-transfer.FileTransferError",
+    "file": "plugins/cordova-plugin-file-transfer/www/FileTransferError.js",
+    "pluginId": "cordova-plugin-file-transfer",
+    "clobbers": [
+      "window.FileTransferError"
+    ]
+  },
+  {
+    "id": "cordova-plugin-file-transfer.FileTransfer",
+    "file": "plugins/cordova-plugin-file-transfer/www/FileTransfer.js",
+    "pluginId": "cordova-plugin-file-transfer",
+    "clobbers": [
+      "window.FileTransfer"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -395,7 +427,10 @@ module.exports.metadata =
   "cordova-plugin-whitelist": "1.3.3",
   "es6-promise-plugin": "4.1.0",
   "cordova-plugin-x-socialsharing": "5.2.1",
-  "cordova-plugin-app-version": "0.1.9"
+  "cordova-plugin-app-version": "0.1.9",
+  "cordova-plugin-splashscreen": "5.0.2",
+  "cordova-plugin-speechrecognition": "1.1.2",
+  "cordova-plugin-file-transfer": "1.7.1"
 };
 // BOTTOM OF METADATA
 });
