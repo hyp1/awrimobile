@@ -38,8 +38,12 @@ function speech(){
 			  function(data){
 				//  alert("i am here");
 				  console.log(data[0]);
-				  $('#search-2').textinput().val(data[0]+' '+data[1]);
-				  $('#result-count').html(data[0]+' '+data[1]).trigger('create');
+				  str="",
+				  if(typeof data[0] !=="undefined")str+=data[0];
+				  if(typeof data[1] !=="undefined")str+=data[1];
+				  if(typeof data[2] !=="undefined")str+=data[2];
+				  $('#search-2').textinput().val(str);
+				  $('#result-count').html(str).trigger('create');
 			  },function(err){
 				  console.log(err,'ERROR');
 				  
