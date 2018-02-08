@@ -38,7 +38,7 @@ function speech(){
 			  function(data){
 				//  alert("i am here");
 				  console.log(data[0]);
-				  str="",
+				  str="";
 				  if(typeof data[0] !=="undefined")str+=data[0];
 				  if(typeof data[1] !=="undefined")str+=data[1];
 				  if(typeof data[2] !=="undefined")str+=data[2];
