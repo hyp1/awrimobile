@@ -1,5 +1,6 @@
 
 function start_install() {
+
 }
 
 function start_menu() {
@@ -32,6 +33,16 @@ function start_pageshow() {
 	try {
 		 	  $( "#start" ).on( "swipeleft", swipeLeftHandlerStart );
 		 	  $( "#start" ).on( "swiperight", swipeRightHandlerStart );
+	/*
+		 	 pubsub = $('<div>');
+		 	//say, in some place, you subscibe a event
+		 	pubsub.on('start-clicked', {somedata: "good day"}, function(e){
+		 		pubsub.trigger('menu-clicked', [ "Custom", "Arguments" ]);
+		 		alert('startpage:' + e.data.somedata);
+		 		console.log(e.data.somedata);
+		 		console.log('subscriber one ', e, this, arguments);
+		 		});
+		*/ 	
 	} catch (error) {
 		console.log('start-pageshow - ' + error);
 	}
@@ -48,13 +59,18 @@ function start_page() {
 		content['my_grid'] = {
 			theme : 'jqm_grid',
 			columns : 2,
-			items : [ bl('Rechtsfragen', 'inhalt',{attributes:{'data-icon':'grid'}}), 
-			          bl('Suchen', 'suche',{attributes:{'data-icon':'search'}}),
-			       	bl('Lesenzeichen', 'lesezeichen', {
-						attributes:{'data-icon':'tag'},
-						'reloadPage' : 'true',						 
+			items : [ bl('Rechtsfragen', '#',{attributes:{'data-icon':'grid',onclick:'pubsub.trigger(\'main-menu-clicked\', { \'page\':\'start\',\'action\':\'Fragen ansehen\' } )'}}), 
+			          bl('Suchen', '#',{attributes:{'data-icon':'search',
+			        	  onclick:'pubsub.trigger(\'main-menu-clicked\', { \'page\':\'start\',\'action\':\'Frage suchen\' } )'}}),
+			       	bl('Lesezeichen', '#', {
+						attributes:{'data-icon':'tag',
+							onclick:'pubsub.trigger(\'main-menu-clicked\', { \'page\':\'start\',\'action\':\'Lesezeichen ansehen\' } )',
+},
+										'reloadPage' : 'true',						 
 					}), 
-					bl('Rechtsfrage stellen', 'stellen',{attributes:{'data-icon':'action'}}),
+					bl('Rechtsfrage stellen', '#',{attributes:{'data-icon':'action',
+						onclick:'pubsub.trigger(\'main-menu-clicked\', { \'page\':\'start\',\'action\':\'Frage stellen\' } )',
+						}}),
 			// bl('Rechtsfrage stellen', 'node/add/rechtsfrage'),
 			]
 		};
@@ -275,24 +291,24 @@ function theme_controls() {
 
 	var htm = '<div data-role="navbar" class="region_sub_navigation  ui-navbar" role="navigation"><ul class="ui-grid-b">'
 		 + '<li class="ui-block-a">'
-		 +'<a href="#" onclick="javascript:drupalgap_goto(\'node/' + node.nid + '\', {});" data-icon="eye">Ansehen</a>'
+		 +'<a href="#" id="btn-ansehen" onclick="pubsub.trigger(\'main-menu-clicked\', { \'page\':\'controls\',\'action\':\'Frage ansehen\' } );" data-icon="eye">Ansehen</a>'
 		 +'</li>'
 		 + '<li class="ui-block-b">'
-		 +'<a href="#" onclick="javascript:drupalgap_goto(\'suche\', {});" data-icon="search">Suchen</a>'
+		 +'<a href="#" id="btn-suchen" onclick="pubsub.trigger(\'main-menu-clicked\', { \'page\':\'controls\',\'action\':\'Frage suchen\' } );" data-icon="search">Suchen</a>'
 		 +'</li>'
 		 + '<li class="ui-block-c">'
-		 +'<a href="#" onclick="javascript:drupalgap_goto(\'stellen\', {});" data-icon="action">Frage stellen</a>'
+		 +'<a href="#" id="btn-stellen" onclick="pubsub.trigger(\'main-menu-clicked\', { \'page\':\'controls\',\'action\':\'Frage stellen\' } );" data-icon="action">Frage stellen</a>'
 		 +'</li>'
 		 + '<li class="ui-block-d">'
-		 +'<a href="#" id="bookmark_btn" onclick="javascript:drupalgap_goto(\'lesezeichen\', {});" data-icon="tag">Lesezeichen</a>'
+		 +'<a href="#" id="bookmark_btn" onclick="pubsub.trigger(\'main-menu-clicked\', { \'page\':\'controls\',\'action\':\'Lesezeichen ansehen\' } );" data-icon="tag">Lesezeichen</a>'
 		 +'</li>'
-		 + '<li class="ui-block-d">'+l('back','#',
+		 + '<li class="ui-block-e">'+l(t('Zurück'),'#',
 				 {
 		        attributes: {
 		            'data-icon': 'back',
 		            'data-iconpos': 'notext',
-		            'class': 'ui-btn-right',
-		            onclick: 'drupalgap_back()'
+		  //          'class': '',
+		            onclick: 'pubsub.trigger(\'main-menu-clicked\', { \'page\':\'controls\',\'action\':\'Zurück\' } );'
 		          },			 
 		        pages: {
 		          value: [''],
@@ -368,6 +384,7 @@ function setFlag(flagged) {
  */
 
 function theme_pic(fbid, h, w) {
+	var pic='';
 	if (Drupal.user.uid == 0)
 		return '<p>' + l('Bitte anmelden', 'user/login') + '</p>';
 	if (fbid === undefined)
@@ -382,6 +399,7 @@ function theme_pic(fbid, h, w) {
 }
 
 function theme_fbpic(fbfield) {
+	var pic='';
 	if (Drupal.user.uid == 0)
 		return '<p>' + l('Bitte anmelden', 'user/login') + '</p>';
 	if (fbfield['und'] === undefined)
@@ -515,6 +533,7 @@ function socialShare(url) {
 /**
  * Implements hook_services_postprocess().
  */
+
 function start_services_postprocess(options, result) {
 	try {
 
@@ -534,6 +553,8 @@ function start_services_postprocess(options, result) {
 				variable_set('system', result);
 				system = JSON.parse(variable_get('system')); // Hier paresn
 				variable_set('user', system.user);
+				drupalgap_goto('user/'+system.user.uid);
+	
 			} else {
 				console.log(variable_get('fboauth'),
 						"NO BFBOATH USER ALREADY LOGGEDIN");
@@ -541,6 +562,7 @@ function start_services_postprocess(options, result) {
 		}
 
 		if (options.service == 'user' && options.resource == 'login') {
+			alert('redirecting');
 			if (result.status == 401) {
 				alert("Es gab ein Problem, bitte wenden Sie sich an einen Administrator");
 			} else {
@@ -552,15 +574,19 @@ function start_services_postprocess(options, result) {
 			} else {
 				variable_set('system', result);
 				variable_set('user', result.user);
+				drupalgap_goto('user/'+result.user.uid);
 			}
 		}
 
 		if (options.service == 'user' && options.resource == 'register') {
 			if (result.status == 401) {
+				console.log(result);
 				alert("Es gab ein Problem, bitte wenden Sie sich an einen Administrator");
 			} else {
 				variable_set('system', result);
 				variable_set('user', result.user);
+				 drupalgap.settings.front = 'user/'+result.user.uid;
+					
 			}
 		}
 

@@ -60,6 +60,7 @@ function inhalt_pageshow() {
 	  // Bind the swipeHandler callback function to the swipe event on div.box
 	  $( "#inhalt" ).on( "swipeleft", swipeLeftHandlerInhalt );
 	  $( "#inhalt" ).on( "swiperight", swipeRightHandlerInhalt );
+	
 }
 
 function swipeLeftHandlerInhalt( event ){
@@ -85,18 +86,18 @@ function inhalt_list_row(view, row, variables) {
 	variable_set('node',row);
 	var content={};	
 	theme_controls();
-	
+
 	if(Drupal.user.uid==0)mark='';
 	else mark=
 	'<a href="#" id="bookmark_toggle" class="inactive" onclick="_toggleBookmark('+row.nid+')" data-role="button" data-icon="tag" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c""><span class="ui-btn-inner ui-btn-corner-all"><span id="isbookmark" class="ui-btn-text"></span><span class="ui-icon ui-icon-delete ui-icon-shadow">&nbsp;</span></span></a>';
 	
 	mark3=''+
-	'<a id="awril" href="javascript:window.open(\'https://awri.ch/node/'	+ node.nid + '\', \'_system\', \'location=yes\');" data-role="button" data-icon="awri32" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c""><span class="ui-btn-inner ui-btn-corner-all"><span>&nbsp;</span></span></a>';
+	'<a id="awril" href="javascript:window.open(\''+Drupal.settings.site_path+'/node/'	+ node.nid + '\', \'_system\', \'location=yes\');" data-role="button" data-icon="awri32" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c""><span class="ui-btn-inner ui-btn-corner-all"><span>&nbsp;</span></span></a>';
 	mark4=''+
-	'<a id="facebook" href="javascript:window.open(\'https://facebook.com/'	+ node.fbmid + '\', \'_system\', \'location=yes\');" data-role="button" data-icon="facebook" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c""><span class="ui-btn-inner ui-btn-corner-all"><span>&nbsp;</span></span></a>';
+	'<a id="facebook" href="javascript:window.open(\'https://facebook.com/'	+ node.field_fbmid + '\', \'_system\', \'location=yes\');" data-role="button" data-icon="facebook" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c""><span class="ui-btn-inner ui-btn-corner-all"><span>&nbsp;</span></span></a>';
 
 	
-	mark5='<a onclick="share(\'https://awri.ch/node/'+row.nid+'\');" data-role="button" data-icon="link" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c""><span class="ui-btn-inner ui-btn-corner-all"><span>&nbsp;</span></span></a>'+
+	mark5='<a onclick="share(\''+Drupal.settings.site_path+'/'+row.nid+'\');" data-role="button" data-icon="link" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c""><span class="ui-btn-inner ui-btn-corner-all"><span>&nbsp;</span></span></a>'+
 '<div data-role="popup" id="popupMenu" data-theme="b">'+
         '<ul data-role="listview" data-inset="true" style="min-width:210px;">'+
             '<li data-role="list-divider">Diesen Beitrag teilen auf:</li>'+
@@ -164,15 +165,14 @@ function questions_empty() {
 
 
 function questions_list_row(view, row, variables) {
-
 	try {
 		//keine unpublished comments!
 if(row.status==0)return;
-	
+var pic= '';
 	if(row.field_fbid===undefined||row.field_fbid==0)
     pic='<img src="'+drupalgap_get_path('module','start')+'/anonymous.png" style="border-radius: 50%;"/>';
    if(row.field_fbid>0)pic='<img src="https://graph.facebook.com/'+row.field_fbid+'/picture?type=small" style="border-radius: 50%;"/>';	
-	if(Drupal.user.uid==0)pic= '<p>'+l('Bitte anmelden','user/login')+'</a></p>';
+	if(Drupal.user.uid==0)'<p>'+l('Bitte anmelden','user/login')+'</a></p>';
 
 	$('.ui-title').html(drupalgap.settings.title).trigger('create');
 	//Counter
@@ -276,7 +276,6 @@ function inhalt_node_page_view_alter_rechtsfrage(node, options) {
 	
 		  $('#inhalt_top,h3.my-css-class').html('['+node.nid+']').trigger('create');	
 
-
 		  var content = {};
 	    content['c1'] = {
 	      theme: 'collapsible',
@@ -285,7 +284,8 @@ function inhalt_node_page_view_alter_rechtsfrage(node, options) {
 	      content: node.content,
 	      attributes: { 'data-collapsed': 'false' }
 	    };  	    	    
-
+	    
+	    
 //	    content['c2']={
 //	    		markup:'<a id="global_bookmark_cnt" href="#" data-role="button" data-icon="tag" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c""><span class="ui-btn-inner ui-btn-corner-all"><span id="global_bookmark_cnt" class="ui-btn-text">0</span> <small>Benutzer haben dieses Lesezeichen gesetzt</small></span></a>'
 //	    }
@@ -302,14 +302,16 @@ function inhalt_node_page_view_alter_rechtsfrage(node, options) {
 	    		};  
 	    
 
-	    
+	    content['c4'] = {
+	    		  markup: '<div id="node_comment_container_' + node.nid + '"></div>',	    		
+	    		};  
 
 	  
 	//     content['c3']=theme_lesezeichen_button(node.nid),
 	     
 
 	    options.success(content);
-		 _getComments(node.nid);
+		 _getComments(node);
 		
 		  
 	  } 
@@ -317,11 +319,11 @@ function inhalt_node_page_view_alter_rechtsfrage(node, options) {
 	}
 
 
-function _getComments(nid){
+function _getComments(node){
 	 var query = {
 			  pagesize:150,
 			  parameters:{
-			    nid: nid,					    
+			    nid: node.nid,					    
 			  },
 		options:{
 				  orderby:{'created':'asc'}
@@ -332,25 +334,112 @@ function _getComments(nid){
 			comment_index(query, {
 			    success: function(comments){
 			    	for(var i=0;i<comments.length;i++){
-//			    	console.log(comments[i],'COMMENT PID????');
+			    	console.log(comments[i],'COMMENT PID????');
 			    	sub='';
+			    	comments[i].language="und";
 			    	if(comments[i].pid!=0)sub='<div "subcomment"><a href="#" class="ui-btn ui-icon-comment ui-btn-icon-notext ui-btn-inline ui-mini ui-corner-all">No text</a></div>';
 			    	//	node['comments'].push(comments[i]);
 			    	//else subs.push(comments[i]);
 		  			 //variable_set('subcomments',subs);
-		  			
+			    	var newDate = new Date();
+			    	newDate.setTime(comments[i].created *1000);
+			    	dateString = newDate.toUTCString();
+			    	
 			    	 items.push(
 			    			 sub+theme_fbpic(comments[i].field_fbid) +' '+ 
-			    			 comments[i].subject+ ' ' + comments[i].content
+			    			 comments[i].subject+' '+ date('d.m.Y H:i',newDate) +' '+ comments[i].content
 			               );
 			   	}
-		
-					drupalgap_item_list_populate('#comments-'+nid, items);		
+			    	
+			    	
+					drupalgap_item_list_populate('#comments-'+node.nid, items);		
+			    
 			    }			
 			});
-		drupalgap_loading_message_hide();
+		//	node.language='und';
+			//ent=drupalgap_get_entity('index','comment',null);
+			//console.log(ent,"ENTITY");
+			Drupal.settings.language_default='und';
+			var id = 'node_comment_container_' + node.nid;
+		
+			var form=drupalgap_get_form('comment_edit', null, node);	
+	console.log(node);
+
+			
+			console.log(form,'form-de');
+			//form=form.replace(/-de-/g,'-und-');
+			$('#' + id).html(form).trigger('create');
+			console.log(form,'form-und');
+			getFBID('#edit-comment-edit-'+node.nid+'-field-fbid-'+Drupal.settings.language_default+'-0-value');
+			
+			
+			drupalgap_loading_message_hide();
 };
 
+function comment_edit_validate(form, form_state) {
+	  try {
+//		  var comment = drupalgap_entity_build_from_form_state(form, form_state);
+//alert(comment.nid);
+//			console.log(comment);
+//			$('#edit-comment-edit-17440-field-fbid-und-0-value').val('122334454556');
+	  }
+	  catch (error) { console.log('comment_edit_submit - ' + error); }
+	}
+function comment_edit_submit(form, form_state) {
+ var comment = drupalgap_entity_build_from_form_state(form, form_state);
+  // console.log(comment);
+ Drupal.settings.language_default='de';
+ //form.action='node/'+comment.nid;  
+ drupalgap_entity_form_submit(form, form_state, comment);
+	
+ drupalgap_goto('node/'+comment.nid,{reloadPage:true});
+
+}
+
+function inhalt_form_alter(form, form_state){
+if(form.bundle=='comment_node_rechtsfrage'){
+	console.log(form,'---------------------------------------------------');
+console.log(form.arguments[1]['field_fbid']['und'][0].value);
+form.prefix='<h2>Ihre Antwort:</h2>';
+form.elements['field_fbid']['und'][0].value=form.arguments[1]['field_fbid']['und'][0]['value']
+form.elements['field_fbid'].access=false;
+form.elements['field_fbmid'].access=false;
+form.elements['subject']['und'][0].value=Drupal.user.name;
+}
+}
+
+function inhalt_services_preprocess(options) {
+	  try {
+		  if(options.service=='comment'&&options.resource=='index'){
+console.log(options,"OPTIONS");
+		  }
+		  // Do stuff before the service call...
+	  }
+	  catch (error) { console.log('hook_services_preprocess - ' + error); }
+	}
+
+
+function getFormattedDate(datum) {
+    var date = datum;
+
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var hour = date.getHours();
+    var min = date.getMinutes();
+    var sec = date.getSeconds();
+
+    month = (month < 10 ? "0" : "") + month;
+    day = (day < 10 ? "0" : "") + day;
+    hour = (hour < 10 ? "0" : "") + hour;
+    min = (min < 10 ? "0" : "") + min;
+    sec = (sec < 10 ? "0" : "") + sec;
+
+    var str = date.getFullYear() + "-" + month + "-" + day + "_" +  hour + ":" + min + ":" + sec;
+
+    /*alert(str);*/
+
+    return str;
+}
 function _addComment(comment){
 //	html=$('#comments').html();
 	
@@ -363,9 +452,7 @@ html='<li '+drupalgap_attributes(attributes)+'>'+comment.content+'<li>';
 $('#comments').html(html).trigger('create');
 }
 
-$(document).on('pagecontainershow', '#inhalt_grid_view', function(e){  
-alert("GR");
-});
+
 
 function theme_footer(){
 var social='<div data-role="controlgroup" data-type="horizontal" class="social ui-btn-left ui-controlgroup ui-controlgroup-horizontal ui-group-theme-b ui-corner-all ui-mini" style="position:relative;" data-mini="true">';

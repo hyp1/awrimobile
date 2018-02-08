@@ -7,11 +7,16 @@
       <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
       <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
       <link rel="shortcut icon" href="favicon.ico" />
+     
+     <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
       
       <!-- jQuery Mobile -->
       <link rel="stylesheet" href="jquery.mobile-1.4.5.min.css" />
+     
       <script src="jquery-1.9.1.min.js"></script>
       <script src="jquery.mobile-1.4.5.min.js"></script>
+      
+      <script src="pubsub.js"></script>
       
       <!-- jDrupal -->
       <script type="text/javascript" charset="utf-8" src="jdrupal-7.0.5.min.js"></script>
@@ -34,21 +39,111 @@
       <div id="_drupalgap_splash" data-role="page">
          <div data-role="header" data-theme="b"><h2>AWRI</h2></div>
          <div class="ui-content" data-role="content">
-            <div id="_drupalgap_splash_content">
-              <img src="images/logo.png" alt="AWRI" style="position: absolute; top: 50%; left: 50%; margin-left: -64px; margin-top: -64px;" />
+            <div id="_drupalgap_splash_content" class="splash">
             </div>
          </div>
       </div>
+
+<!-- Load OpenFB -->
+<script src="cordova.js"></script>      
+      
 <!-- Load OpenFB -->
 <script src="openfb.js"></script>
 
+
 <script type="text/javascript" charset="utf-8">
 openFB.init({appId:'126766317359254',scope:'email'});
+
+pubsub = $('<body>');
+pubsub.on('main-menu-clicked', {somedata:'test'}, function(e){
+var page=arguments[1]['page'];
+var action=arguments[1]['action'];
+console.log(page + ' -> ' + action,'main-menu-clicked');
+
+if( page == 'root' && action == 'Home'){
+//	alert(JSON.parse(variable_get('node')).nid);
+	drupalgap_goto(drupalgap.settings.front);
+}
+
+if( page == 'upload' && action == 'Foto hochgeladen'){
+  	//say, in some place, you subscibe a event
+	pubsub.on('sub-menu-clicked', {somedata: "good day"}, function(e){
+		alert('subscriber one:' + arguments[1].id);
+		
+		console.log(arguments[1].id);
+		console.log(arguments[1].fid);
+		var nr= arguments[1].id.substr(arguments[1].id.lastIndexOf("-")+1,arguments[1].id.length);	
+		nr=parseInt(nr)+1;		
+	if(nr<fields)$('.field-name-upload-createfrage-field-image-'+nr+'-start').show();
+		console.log('subscriber one ', e, this, arguments);
+	
+
+		});
+
+}
+
+if( page == 'start' && action == 'Fragen ansehen'){
+	drupalgap_goto('inhalt');
+}
+if( page == 'start' && action == 'Lesezeichen ansehen'){
+	drupalgap_goto('lesezeichen');
+}
+if( page == 'start' && action == 'Frage suchen'){
+	drupalgap_goto('suche');
+}
+
+if( page == 'start' && action == 'Frage stellen'){
+	drupalgap_goto('createfrage');
+}
+
+
+if( page == 'controls' && action == 'Frage ansehen'){
+	drupalgap_goto('node/'+JSON.parse(variable_get('node')).nid);
+}
+
+if( page == 'controls' && action == 'Frage suchen'){
+	drupalgap_goto('suche');	
+}
+
+if( page == 'controls' && action == 'Frage stellen'){
+//	alert(JSON.parse(variable_get('node')).nid);
+	drupalgap_goto('createfrage');
+}
+
+if( page == 'controls' && action == 'Lesezeichen ansehen'){
+//	alert(JSON.parse(variable_get('node')).nid);
+	drupalgap_goto('lesezeichen');
+}
+
+if( page == 'controls' && action == 'Zurück'){
+//	alert(JSON.parse(variable_get('node')).nid);
+	drupalgap_back();
+}
+
+
+
+	//alert('main-menu-clicked:' + arguments[1]['page'] + ' -> ' +arguments[1]['action']);
+	//console.log(arguments[1]['page'],"ARGS page");
+	//console.log(arguments[1]['action'],"ARGS action");
+	//console.log('main-menu-clicked subscriber one ', e, this, arguments);
+	});
+
+/*
+  Events:
+pubsub.trigger(\'main-menu-clicked\', { \'page\':\'controls\',\'action\':\'Frage ansehen\' } );
+pubsub.trigger(\'main-menu-clicked\', { \'page\':\'controls\',\'action\':\'Frage suchen\' } );
+pubsub.trigger(\'main-menu-clicked\', { \'page\':\'controls\',\'action\':\'Frage stellen\' } );
+pubsub.trigger(\'main-menu-clicked\', { \'page\':\'controls\',\'action\':\'Lesezeichen ansehen\' } );
+pubsub.trigger(\'main-menu-clicked\', { \'page\':\'controls\',\'action\':\'Zurück\' } );
+
+ */
+
+
     </script>
 
-<!-- Load Cordova  -->
+<!-- Load Cordova  
 <script src="cordova.js"></script>
-
+-->
       <!-- Load DrupalGap -->
       <script type="text/javascript">
         drupalgap_onload();

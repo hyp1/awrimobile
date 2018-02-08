@@ -29,4 +29,27 @@ background-image:url('../images/awri32-black.png');
 #bookmark_toggle.inactive{
 	background-color:#FF7256;
 }
-
+.field-name-upload-createfrage-field-image-1-start{
+	display:none;
+}
+.field-name-upload-createfrage-field-image-2-start{
+	display:none;
+}
+.field-name-upload-createfrage-field-image-3-start{
+	display:none;
+}
+.field-name-upload-createfrage-field-image-4-start{
+	display:none;
+}
+.field-name-upload-createfrage-field-image-5-start{
+	display:none;
+}
+.splash{
+	background-image:url("../images/splash.png");
+	 background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center;  
+}
+.body{
+	font-family: 'Oswald', sans-serif;
+}
