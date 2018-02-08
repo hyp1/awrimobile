@@ -132,7 +132,7 @@ drupalgap.settings.facebook = {
 drupalgap.settings.title = 'AWRIMobile';
  
 // App Front Page
-drupalgap.settings.front = 'suche';
+drupalgap.settings.front = 'start';
 //drupalgap.settings.front = 'testpubsub';
 // Theme
 drupalgap.settings.theme = 'app_theme';
@@ -142,7 +142,7 @@ drupalgap.theme = {
 		    theme_footer: 'b',
 		  };
 // Logo
-drupalgap.settings.logo = 'images/re_logo640.jpg';
+drupalgap.settings.logo = 'themes/app_theme/images/logo800x800.png';
 
 // Offline Warning Message. Set to false to hide message.
 drupalgap.settings.offline_message = 'Keine Verbindung zu '+Drupal.settings.site_path+'... !';
@@ -190,7 +190,7 @@ Drupal.modules.contrib['media'] = {};
 ;
 Drupal.modules.custom['start'] = {};
 Drupal.modules.custom['suche'] = {};
-Drupal.modules.custom['stellen'] = {};
+//Drupal.modules.custom['stellen'] = {};
 Drupal.modules.custom['inhalt'] = {};
 Drupal.modules.custom['lesezeichen'] = {};
 //Drupal.modules.custom['mobile_update'] = {};
