@@ -302,7 +302,7 @@ function theme_controls() {
 		 + '<li class="ui-block-d">'
 		 +'<a href="#" id="bookmark_btn" onclick="pubsub.trigger(\'main-menu-clicked\', { \'page\':\'controls\',\'action\':\'Lesezeichen ansehen\' } );" data-icon="tag">Lesezeichen</a>'
 		 +'</li>'
-		 + '<li class="ui-block-e">'+l(t('Zurück'),'#',
+	if(drupalgap.settings.mode!=='phonegap')	 + '<li class="ui-block-e">'+l(t('Zurück'),'#',
 				 {
 		        attributes: {
 		            'data-icon': 'back',

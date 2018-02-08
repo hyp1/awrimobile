@@ -45,7 +45,7 @@ background-image:url('../images/awri32-black.png');
 	display:none;
 }
 .splash{
-	background-image:url("../images/splash.png");
+	background-image:url("../images/logo800x800.png");
 	 background-size:     cover;                      /* <------ */
     background-repeat:   no-repeat;
     background-position: center center;  
