@@ -347,7 +347,7 @@ function _getComments(node){
 			    	
 			    	 items.push(
 			    			 sub+theme_fbpic(comments[i].field_fbid) +' '+ 
-			    			 comments[i].subject+' '+ date('d.m.Y H:i',newDate) +' '+ comments[i].content
+			    			 comments[i].subject+' '+ date('d.m.Y H:i',newDate) +'</small></p> '+ comments[i].content
 			               );
 			   	}
 			    	
