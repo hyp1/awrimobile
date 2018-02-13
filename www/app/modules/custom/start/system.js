@@ -56,7 +56,6 @@ function _isBookmark(nid,page) {
 }
 
 function _toggleBookmark(nid){
-	alert(nid);
 flag_is_flagged('bookmarks', nid, Drupal.user.uid,  {
       success: function(result) {
           try {

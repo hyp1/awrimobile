@@ -30,9 +30,9 @@ function speech(){
 	options = {
 			 language:'de-DE',
 			  matches:10,
-			  prompt:'Sprechen Sie deutlich',      // Android only
+			  prompt:'Sprechen Sie bitte deutlich:',      // Android only
 			  showPopup:true,  // Android only
-			  showPartial:true, 
+			  showPartial:false, 
 			}
 	window.plugins.speechRecognition.startListening(
 			  function(data){
