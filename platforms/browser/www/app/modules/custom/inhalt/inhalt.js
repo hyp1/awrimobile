@@ -1,17 +1,15 @@
-var hash=user_password();
     
 function inhalt_menu() {
   try {
     var items = {};
-    items['inhalt'] = {
+      items['inhalt'] = {
       title: 'Rechtsfragen',
       page_callback: 'inhalt',
-      pageshow: 'inhalt_pageshow',
-    	  
+      pageshow: 'inhalt_pageshow',    	  
     };    
     return items;
   }
-  catch (error) { console.log('start_menu - ' + error); }
+  catch (error) { console.log('inhalt_menu - ' + error); }
 }
 
 
@@ -43,9 +41,12 @@ function inhalt() {
    	      
     	  };
     
+  
+
+    
 
     content['c2']={
-	  		markup:'<div id="pager"></div>'
+	  		markup:'<div id="pager-bottom"></div>'
 	  };
     
 
@@ -60,6 +61,7 @@ function inhalt_pageshow() {
 	  // Bind the swipeHandler callback function to the swipe event on div.box
 	  $( "#inhalt" ).on( "swipeleft", swipeLeftHandlerInhalt );
 	  $( "#inhalt" ).on( "swiperight", swipeRightHandlerInhalt );
+//  alert("show");
 	
 }
 
@@ -80,47 +82,124 @@ function theme_mypager(page_id,id,pos,page,path){
 	return _theme_pager_link_click({'theme':'view','pager_pos':pos,'format':'grid','columns':'2','path':'drupalgap/views_datasource/drupalgap_content','row_callback':'inhalt_list_row','empty_callback':'inhalt_list_empty','attributes':{'id':id,'class':'view '},'page_id':page_id,'page':page});	
 }
 
+function theme_pager_bottom(last){
+	page=variable_get('page');
+	
+	if(page==1)grid='ui-grid-solo';
+	else if(page==last+1)grid='ui-grid-solo';
+	else grid='ui-grid-a';
+	html='<div id="theme_pager_bottom" class="pager ui-navbar" data-role="navbar" role="navigation"><ul class="'+grid+'">';
+if(page==last+1)html+='<li class="ui-block-a"><a onclick="_theme_pager_link_click({&quot;theme&quot;:&quot;view&quot;,&quot;format&quot;:&quot;list&quot;,&quot;columns&quot;:2,&quot;path&quot;:&quot;awrimobile/fragen&quot;,&quot;row_callback&quot;:&quot;inhalt_list_row&quot;,&quot;empty_callback&quot;:&quot;inhalt_list_empty&quot;,&quot;attributes&quot;:{&quot;id&quot;:&quot;inhalt_grid_view&quot;,&quot;class&quot;:&quot;view &quot;},&quot;page_id&quot;:&quot;inhalt&quot;,&quot;page&quot;:0})" class="pager_previous ui-btn" href="#">««</a></li>';
+else
+if(page==1)html+='<li class="ui-block-a"><a onclick="_theme_pager_link_click({&quot;theme&quot;:&quot;view&quot;,&quot;format&quot;:&quot;list&quot;,&quot;columns&quot;:2,&quot;path&quot;:&quot;awrimobile/fragen&quot;,&quot;row_callback&quot;:&quot;inhalt_list_row&quot;,&quot;empty_callback&quot;:&quot;inhalt_list_empty&quot;,&quot;attributes&quot;:{&quot;id&quot;:&quot;inhalt_grid_view&quot;,&quot;class&quot;:&quot;view &quot;},&quot;page_id&quot;:&quot;inhalt&quot;,&quot;page&quot;:'+last+'})" class="pager_next ui-btn" href="#">»»</a></li>';	
+else{
+	html+='<li class="ui-block-a"><a onclick="_theme_pager_link_click({&quot;theme&quot;:&quot;view&quot;,&quot;format&quot;:&quot;list&quot;,&quot;columns&quot;:2,&quot;path&quot;:&quot;awrimobile/fragen&quot;,&quot;row_callback&quot;:&quot;inhalt_list_row&quot;,&quot;empty_callback&quot;:&quot;inhalt_list_empty&quot;,&quot;attributes&quot;:{&quot;id&quot;:&quot;inhalt_grid_view&quot;,&quot;class&quot;:&quot;view &quot;},&quot;page_id&quot;:&quot;inhalt&quot;,&quot;page&quot;:0})" class="pager_previous ui-btn" href="#">««</a></li>';
+	html+='<li class="ui-block-b"><a onclick="_theme_pager_link_click({&quot;theme&quot;:&quot;view&quot;,&quot;format&quot;:&quot;list&quot;,&quot;columns&quot;:2,&quot;path&quot;:&quot;awrimobile/fragen&quot;,&quot;row_callback&quot;:&quot;inhalt_list_row&quot;,&quot;empty_callback&quot;:&quot;inhalt_list_empty&quot;,&quot;attributes&quot;:{&quot;id&quot;:&quot;inhalt_grid_view&quot;,&quot;class&quot;:&quot;view &quot;},&quot;page_id&quot;:&quot;inhalt&quot;,&quot;page&quot;:'+last+'})" class="pager_next ui-btn" href="#">»»</a></li>';		
+}
+html+='</ul></div>';
+return html;	
+}
+
+function theme_controls() {
+	var pid = drupalgap_get_page_id();	
+	node = JSON.parse(variable_get('node'));
+back='';
+if(drupalgap.settings.mode=='web-app')back='<li class="ui-block-a">'+l(t('Zurück'),'#',
+		 {
+    attributes: {
+        'data-icon': 'back',
+        'data-iconpos': 'notext',
+//          'class': '',
+        onclick: 'pubsub.trigger(\'main-menu-clicked\', { \'page\':\'controls\',\'action\':\'Zurück\' } );'
+      },			 
+    pages: {
+      value: [''],
+      mode: 'exclude'
+    }
+	
+  })+'</li>';	 
+	
+	var htm = '<div data-role="navbar" class="region_sub_navigation  ui-navbar" role="navigation"><ul class="ui-grid-b">'
+		+ back 
+		+ '<li class="ui-block-b">'			
+		 +'<a href="#" id="'+drupalgap_get_page_id()+'bookmark_btn" onclick="pubsub.trigger(\'main-menu-clicked\', { \'page\':\'controls\',\'action\':\'Lesezeichen ansehen\' } );" data-icon="tag">Lesezeichen</a>'
+		 +'</li>'
+		 + '<li class="ui-block-c">'
+		 +'<a href="#" id="btn-stellen" onclick="pubsub.trigger(\'main-menu-clicked\', { \'page\':\'controls\',\'action\':\'Frage stellen\' } );" data-icon="action">Frage stellen</a>'
+		 +'</li>'
+		 + '<li class="ui-block-d">'
+		 +'<a href="#" id="btn-suchen" onclick="pubsub.trigger(\'main-menu-clicked\', { \'page\':\'controls\',\'action\':\'Frage suchen\' } );" data-icon="search">Suchen</a>'
+		 +'</li>'
+		 + '<li class="ui-block-e">'
+		 +'<a href="#" id="btn-ansehen" onclick="pubsub.trigger(\'main-menu-clicked\', { \'page\':\'controls\',\'action\':\'Frage ansehen\' } );" data-icon="eye">Ansehen</a>'
+		 +'</li>'
 
 
-function inhalt_list_row(view, row, variables) {
-	variable_set('node',row);
-	var content={};	
-	theme_controls();
+	//	 + '<li class="ui-block-c"><a href="#" onclick="javascript:window.open(\'https://facebook.com/'
+	//		+ node.fbmid
+	//		+ '\', \'_system\', \'location=yes\');"  data-icon="grid" class="ui-link ui-btn ui-icon-grid ui-btn-icon-top">Facebook</a></li>'
+	//		+ '<li class="ui-block-d"><a  id="bookmark" onclick="javascript:_toggleBookmark('+node.nid+');" data-icon="info" class="ui-link ui-btn ui-icon-info ui-btn-icon-top">Lesezeichen</a></li>'
+	//		+ '<li class="ui-block-e"><a href="#" onclick="javascript:drupalgap_goto(\'user-listing\', {});" data-icon="eye" class="ui-link ui-btn ui-icon-info ui-btn-icon-top">Ansehen</a></li>'
+	//		+
 
+			'</ul></div>';
+
+	var content={};		
+		content['ctr-' + pid] = {
+		markup : htm
+	};
+	drupalgap_render(content);
+	return content;
+}
+function theme_small_controls(){
+node=JSON.parse(variable_get('node'));
+	if(typeof node.field_fbmid['und']!=="undefined")fbmid=node.field_fbmid['und'][0].value;
+	else fbmid=node.field_fbmid;
+	
 	if(Drupal.user.uid==0)mark='';
 	else mark=
-	'<a href="#" id="bookmark_toggle" class="inactive" onclick="_toggleBookmark('+row.nid+')" data-role="button" data-icon="tag" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c""><span class="ui-btn-inner ui-btn-corner-all"><span id="isbookmark" class="ui-btn-text"></span><span class="ui-icon ui-icon-delete ui-icon-shadow">&nbsp;</span></span></a>';
+	'<a href="#" id="'+drupalgap_get_page_id()+'bookmark_toggle" class="inactive bookmark" onclick="_toggleBookmark('+node.nid+')" data-role="button" data-icon="tag" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="'+drupalgap.theme.theme_header+'"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-icon ui-icon-delete ui-icon-shadow">&nbsp;</span></span></a>';
 	
 	mark3=''+
-	'<a id="awril" href="javascript:window.open(\''+Drupal.settings.site_path+'/node/'	+ node.nid + '\', \'_system\', \'location=yes\');" data-role="button" data-icon="awri32" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c""><span class="ui-btn-inner ui-btn-corner-all"><span>&nbsp;</span></span></a>';
+	'<a id="awril" href="javascript:window.open(\''+Drupal.settings.site_path+'/node/'	+ node.nid + '\', \'_system\', \'location=yes\');" data-role="button" data-icon="awri32" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="'+drupalgap.theme.theme_header+'"><span class="ui-btn-inner ui-btn-corner-all"><span>&nbsp;</span></span></a>';
 	mark4=''+
-	'<a id="facebook" href="javascript:window.open(\'https://facebook.com/'	+ node.field_fbmid + '\', \'_system\', \'location=yes\');" data-role="button" data-icon="facebook" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c""><span class="ui-btn-inner ui-btn-corner-all"><span>&nbsp;</span></span></a>';
+	'<a id="facebook" href="javascript:window.open(\'https://facebook.com/'	+ fbmid + '\', \'_system\', \'location=yes\');" data-role="button" data-icon="facebook" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="'+drupalgap.theme.theme_header+'"><span class="ui-btn-inner ui-btn-corner-all"><span>&nbsp;</span></span></a>';
 
 	
-	mark5='<a onclick="share(\''+Drupal.settings.site_path+'/'+row.nid+'\');" data-role="button" data-icon="link" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c""><span class="ui-btn-inner ui-btn-corner-all"><span>&nbsp;</span></span></a>'+
-'<div data-role="popup" id="popupMenu" data-theme="b">'+
+	mark5='<a onclick="share(\''+Drupal.settings.site_path+'/node/'+node.nid+'\',\''+node.nid+'\');" data-role="button" data-icon="link" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="'+drupalgap.theme.theme_header+'"><span class="ui-btn-inner ui-btn-corner-all"><span>&nbsp;</span></span></a>'+
+'<div data-role="popup" id="popupMenu-'+drupalgap_get_page_id()+'-'+node.nid+'" data-theme="b">'+
         '<ul data-role="listview" data-inset="true" style="min-width:210px;">'+
             '<li data-role="list-divider">Diesen Beitrag teilen auf:</li>'+
-_getSocialHTML('https://awri.ch/node/'+row.nid);
+_getSocialHTML('https://awri.ch/node/'+node.nid);
 	'</ul>'+
 '</div>";';
 	
+return mark+mark3+mark4+mark5;
+}
+
+function inhalt_list_row(view, row, variables) {
+	variable_set('node',row);
+	variable_set('page',view.page+1);
+	variable_set('pages',view.pages);
+	console.log(row);
+	var content={};	
+	theme_controls(); 
 		content.card={
 			markup:'<div data-role="collapsible" data-inset="true" data-collapsed="false" data-iconpos="left">'+    
 //    '<h2><img src="'+drupalgap_get_path('theme','app_theme')+'/images/anonymous.png" id="node_picture" width="28" height="28">&nbsp;&nbsp;&nbsp;'+row.field_fbname+'</h2><p id="body">'+row.title+'</p>'+
-    '<h2>'+theme_pic(row.field_fbid,28,28)+'&nbsp;&nbsp;&nbsp;'+row.field_fbname+
+    '<h2>'+theme_pic(row.field_fbid,28,28)+'&nbsp;&nbsp;&nbsp;'+row.field_fbname+' '+row.created+
     '<span class="ui-li-count ui-btn-up-c ui-btn-corner-all">'+row.comment_count+'</span>'+
-    '</h2><div><p id="body"><div>'+theme_pic(row.field_fbid,70,70)+'</div>'+row.body+'</p></div>'+mark
-    +mark3+mark4+mark5
+    '</h2><div><p id="body"><div>'+theme_pic(row.field_fbid,70,70)+'</div>'+row.body+'</p></div>'+theme_small_controls(row)
 	+'</div>'
 	};
+
 	
-	
+				
 content['isb']={ 
 		markup:drupalgap_jqm_page_event_script_code({
 	    page_id: drupalgap_get_page_id(),
 	    jqm_page_event: 'pageshow',
-	    jqm_page_event_callback:" _isBookmark("+row.nid+",'#isbookmark')",
+	    jqm_page_event_callback:" _isBookmark("+row.nid+",'"+drupalgap_get_page_id()+"')",
 	    jqm_page_event_args: JSON.stringify({
 	        'nid': row,
 	        'elem':'#isbookmark'
@@ -141,7 +220,11 @@ content['countb']={
 };	
 
 
+//content['pager_bottom']={
+//		markup:theme_pager_bottom(variable_get('pages')-1),
+//}
 
+$('#pager-bottom').html(theme_pager_bottom(view.pages-1));
 $('#inhalt_top,h3.my-css-class').html((1+view.page)+'/'+view.pages).trigger('create');	
 
 return drupalgap_render(content);
@@ -168,13 +251,15 @@ function questions_list_row(view, row, variables) {
 	try {
 		//keine unpublished comments!
 if(row.status==0)return;
+
+
 var pic= '';
 	if(row.field_fbid===undefined||row.field_fbid==0)
     pic='<img src="'+drupalgap_get_path('module','start')+'/anonymous.png" style="border-radius: 50%;"/>';
    if(row.field_fbid>0)pic='<img src="https://graph.facebook.com/'+row.field_fbid+'/picture?type=small" style="border-radius: 50%;"/>';	
 	if(Drupal.user.uid==0)'<p>'+l('Bitte anmelden','user/login')+'</a></p>';
 
-	$('.ui-title').html(drupalgap.settings.title).trigger('create');
+//	$('.ui-title').html(drupalgap.settings.title).trigger('create');
 	//Counter
 	$('#title-inhalt').html('<h2 class="ui-title">'+(1 + view.page) + '/' + view.pages+'</h2>').trigger('create');
 		//Collapsible Inhalt		
@@ -273,15 +358,18 @@ function inhalt_node_page_view_alter_rechtsfrage(node, options) {
 		  variable_set('node',node);
 		  if(node.field_fbname['und']===undefined)name=node.name;
 		  else name=node.field_fbname['und'][0].value;
+		  drupalgap_loading_message_show();
+		  setTitle('ID:'+node.nid+'');	
+		   	var newDate = new Date();
+	    	newDate.setTime(node.created *1000);
+	    	dateString = newDate.toUTCString();
 	
-		  $('#inhalt_top,h3.my-css-class').html('['+node.nid+']').trigger('create');	
-
 		  var content = {};
 	    content['c1'] = {
 	      theme: 'collapsible',
-	      header: theme_fbpic(node.field_fbid) +name+' <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">'+node.comment_count+'</span>',
+	      header: theme_fbpic(node.field_fbid)+' '+name+' <small>'+date('d.m.Y H:i',node.created*1000)+'</small> <span class="ui-li-count ui-btn-up-c ui-btn-corner-all">'+node.comment_count+'</span>',
 	      'id':'inhalt',
-	      content: node.content,
+	      content: node.content+theme_small_controls(node),
 	      attributes: { 'data-collapsed': 'false' }
 	    };  	    	    
 	    
@@ -292,7 +380,7 @@ function inhalt_node_page_view_alter_rechtsfrage(node, options) {
 	    
 	    content['c0'] = {
 	    		  theme: 'jqm_item_list',
-	    		  title: 'Antworten',
+	    	//	  title: 'Antworten',
 	    		  items: [],
 	    		  attributes: {
 	    			  'id': 'comments-'+node.nid,
@@ -300,22 +388,20 @@ function inhalt_node_page_view_alter_rechtsfrage(node, options) {
 	    		    'class': 'awri-comments'
 	    		  }
 	    		};  
-	    
 
 	    content['c4'] = {
 	    		  markup: '<div id="node_comment_container_' + node.nid + '"></div>',	    		
 	    		};  
 
-	  
-	//     content['c3']=theme_lesezeichen_button(node.nid),
-	     
-
+	
 	    options.success(content);
 		 _getComments(node);
-		
-		  
+
+	     //_isBookmark(node.nid,drupalgap_get_page_id());
+	     
+		 drupalgap_loading_message_hide();
 	  } 
-	  catch (error) { console.log('my_module_node_page_view_alter_article - ' + error); }
+	  catch (error) { console.log('inhalt_node_page_view_alter_article - ' + error); }
 	}
 
 
@@ -330,11 +416,10 @@ function _getComments(node){
 			  }
 			};
 	 var items=[];
-	  drupalgap_loading_message_show();
 			comment_index(query, {
 			    success: function(comments){
 			    	for(var i=0;i<comments.length;i++){
-			    	console.log(comments[i],'COMMENT PID????');
+			   // 	console.log(comments[i],'COMMENT PID????');
 			    	sub='';
 			    	comments[i].language="und";
 			    	if(comments[i].pid!=0)sub='<div "subcomment"><a href="#" class="ui-btn ui-icon-comment ui-btn-icon-notext ui-btn-inline ui-mini ui-corner-all">No text</a></div>';
@@ -347,7 +432,7 @@ function _getComments(node){
 			    	
 			    	 items.push(
 			    			 sub+theme_fbpic(comments[i].field_fbid) +' '+ 
-			    			 comments[i].subject+' '+ date('d.m.Y H:i',newDate) +' '+ comments[i].content
+			    			 comments[i].subject+' '+ date('d.m.Y H:i',newDate) +'</small></p> '+ comments[i].content
 			               );
 			   	}
 			    	
@@ -359,64 +444,67 @@ function _getComments(node){
 		//	node.language='und';
 			//ent=drupalgap_get_entity('index','comment',null);
 			//console.log(ent,"ENTITY");
+if(Drupal.user.uid>0){
 			Drupal.settings.language_default='und';
 			var id = 'node_comment_container_' + node.nid;
 		
 			var form=drupalgap_get_form('comment_edit', null, node);	
-	console.log(node);
-
-			
-			console.log(form,'form-de');
-			//form=form.replace(/-de-/g,'-und-');
+	//			console.log(form.validate);
 			$('#' + id).html(form).trigger('create');
-			console.log(form,'form-und');
-			getFBID('#edit-comment-edit-'+node.nid+'-field-fbid-'+Drupal.settings.language_default+'-0-value');
+	//		getFBID('#edit-comment-edit-'+node.nid+'-field-fbid-'+Drupal.settings.language_default+'-0-value');
+}			
 			
 			
-			drupalgap_loading_message_hide();
 };
 
-function comment_edit_validate(form, form_state) {
+function mycomment_edit_validate(form, form_state) {
 	  try {
 //		  var comment = drupalgap_entity_build_from_form_state(form, form_state);
-//alert(comment.nid);
+alert('mycomment_edit_validate');
+console.log(form_state.values.comment_body);
+if (form_state.values.comment_body['und'][0]== '') {
+    drupalgap_form_set_error('comment-body-und-0', 'Sorry, no jokers allowed.');
+  }
+return true;
 //			console.log(comment);
 //			$('#edit-comment-edit-17440-field-fbid-und-0-value').val('122334454556');
 	  }
 	  catch (error) { console.log('comment_edit_submit - ' + error); }
 	}
-function comment_edit_submit(form, form_state) {
+function mycomment_edit_submit(form, form_state) {
  var comment = drupalgap_entity_build_from_form_state(form, form_state);
-  // console.log(comment);
- Drupal.settings.language_default='de';
- //form.action='node/'+comment.nid;  
- drupalgap_entity_form_submit(form, form_state, comment);
-	
+ comment_save(comment,{sucess:function(data){
+	 drupalgap_set_message('Ihr Kommentar wurde gesendet.');
+	 console.log(data);
+	 drupalgap_goto('node/'+comment.nid,{reloadPage:true});
+
+ }});	 
+
  drupalgap_goto('node/'+comment.nid,{reloadPage:true});
+ // console.log(comment);
+ //Drupal.settings.language_default='de';
+ //form.action='node/'+comment.nid;  
+ //drupalgap_entity_form_submit(form, form_state, comment);
+ //drupalgap_goto('node/'+comment.nid,'{reloadPage:true}');
+
+ //drupalgap_goto('inhalt',{reloadPage:true});
 
 }
 
 function inhalt_form_alter(form, form_state){
 if(form.bundle=='comment_node_rechtsfrage'){
-	console.log(form,'---------------------------------------------------');
-console.log(form.arguments[1]['field_fbid']['und'][0].value);
-form.prefix='<h2>Ihre Antwort:</h2>';
-form.elements['field_fbid']['und'][0].value=form.arguments[1]['field_fbid']['und'][0]['value']
-form.elements['field_fbid'].access=false;
-form.elements['field_fbmid'].access=false;
-form.elements['subject']['und'][0].value=Drupal.user.name;
-}
-}
+//	console.log(form,'---------------------------------------------------');
+//console.log(form.arguments[1]['field_fbid']['und']);
 
-function inhalt_services_preprocess(options) {
-	  try {
-		  if(options.service=='comment'&&options.resource=='index'){
-console.log(options,"OPTIONS");
-		  }
-		  // Do stuff before the service call...
-	  }
-	  catch (error) { console.log('hook_services_preprocess - ' + error); }
-	}
+form.validate.push('mycomment_edit_validate')
+
+form.prefix='<h2>Ihre Antwort:</h2>';
+form.elements['field_fbid']['und'][0].value=form.arguments[1]['field_fbid']['und']['value'];
+form.elements['field_fbid'].access=false;
+//form.elements['field_fbmid'].access=false;
+form.elements['subject'].value=Drupal.user.name;
+}
+}
 
 
 function getFormattedDate(datum) {
@@ -446,7 +534,8 @@ function _addComment(comment){
 	 var attributes = {
 		      'class': 'awricomment',
 		   //   style: 'width: 100%; height: 320px;'
-		    };
+	id:'comment-'+comment.cid,   
+	 };
 		    
 html='<li '+drupalgap_attributes(attributes)+'>'+comment.content+'<li>';
 $('#comments').html(html).trigger('create');

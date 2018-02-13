@@ -1,14 +1,7 @@
-var CREATED=0;
-var SENT=1;
 
 var fields=5;
 var field_name='field_image';
 
-function createfrage_install(){
-	if(variable_get('createfrage')==null)
-		variable_set('createfrage',CREATED);
-
-}
 
 
 
@@ -46,13 +39,20 @@ function createfrage_page() {
 	try {
 		var content = {};
 		
+		if(Drupal.user.uid<1){
+			drupalgap_set_message('Sie müssen dazu angemeldet sein.');
+
+		//	drupalgap_goto('401',{reloadPage:true});
+		return content;
+		}
+		
 		content['field_kanton'] = {
 				  theme: 'select',
 				  attributes:{
-					  id:'field_kanton',
+					  id:'field_kanton',					  
 				  },
-				  options: {
-				  },
+				  options: {				
+				  },				
 				};
 		
 		content['service_label'] = {
@@ -130,9 +130,10 @@ function createfrage_page() {
 				  theme: 'button',
 				  text: 'Senden',
 				  attributes: {
-				    onclick: "saveNode();",
-				    	'data-theme': "b"
-			  }
+				    'onclick': "javascript:saveNode();",
+				    	'data-theme': drupalgap.theme.theme_content,
+				    	'data-icon': 'mail'
+				  }
 		};
 		
 
@@ -146,9 +147,10 @@ function createfrage_page() {
 
 function toggleAnonym(){
 	if(!$('#anonym').is(':checked')){
-		$('#fbid').show();
+		//$('#fbid').show();
+		$('#fbname').show();
 	}else{
-		$('#fbid').hide();
+	//	$('#fbid').hide();
 		$('#fbname').hide();
 	}
 }
@@ -156,10 +158,10 @@ function toggleAnonym(){
 function saveNode() {
 	body=$('textarea#body').val();
 //	alert($('select#field_kanton').val());
-//	return;
-	if(body=='' || body-length < 10){
+if(Drupal.user.uid<1)return;
+	if(body=='' || body.length < 10){
 		$('textarea#body').focus();
-		drupalgap_alert('Bitte geben sie eine Frage ein.');
+		Alert('Bitte geben sie eine Frage ein. Der Text ist zu kurz!');
 		return;
 	}
 	var lang=Drupal.settings.language_default;
@@ -185,7 +187,11 @@ str="";
  //             'field_fbid': {und:{0:{ value: $('#fbid').val(),      		                               	          
  //             }}},
               'field_kanton': {und:{ tid: $('select#field_kanton').val(),      		                   
-              }}
+              }},
+			  
+              'field_anonym': {und:{ 0:{value: $('#anonym').is(':checked') ? 1:0,      		                   
+              }}},
+			  
 	};
 
 
@@ -228,7 +234,7 @@ function createfrage_pageshow() {
 	}
 		$('#fbid').hide();
 		$('#fbname').hide();
-		
+		var el=  $('#field_kanton');
 		var query = {
 				  parameters: {
 				    vid: 3,								    
@@ -236,23 +242,36 @@ function createfrage_pageshow() {
 				  options:{name:'ASC'},
 		    pagesize: 27,
 				};
+		el.val("Keine Angabe");
+		
 				taxonomy_term_index(query, {
 				    success: function(terms) {
 				      if (terms.length == 0) { return; }
 				    var items=[];
 				      for(i=0;i<terms.length;i++){
-				    console.log(terms[i]);
-				    $('#field_kanton').append($('<option>', { 
+			//	    console.log(terms[i]);
+				 if(terms[i].tid==66) el.append($('<option>', { 
+				        value: terms[i].tid,
+				        text : '('+terms[i].name+ ')  ' +terms[i].description,
+				        selected:'true'
+				 }));
+				 else el.append($('<option>', { 
 				        value: terms[i].tid,
 				        text : '('+terms[i].name+ ')  ' +terms[i].description 
 				    }));
-				    
 				     }
-				      
+				      el.selectedIndex = 66;
+				      el.selectmenu("refresh", true);	      
 				 //     alert('Loaded ' + terms.length + ' term(s)!');
 				    }
 				});
-				
+			
+				//el.trigger('create');
+		//	el.val(1).attr('selected', true).siblings('option');
+//			el.selectmenu();
+
+			// jQM refresh
+	//		el.selectmenu("refresh", true);
 		
 		//say, in some place, you subscibe a event
 		pubsub.on('upload-clicked', {somedata: "good day"}, function(e){
@@ -262,7 +281,7 @@ function createfrage_pageshow() {
 			var nr= arguments[1].id.substr(arguments[1].id.lastIndexOf("-")+1,arguments[1].id.length);	
 			nr=parseInt(nr)+1;		
 		if(nr<fields)$('.field-name-upload-createfrage-field-image-'+nr+'-start').show();
-			console.log('subscriber one ', e, this, arguments);
+		//	console.log('subscriber one ', e, this, arguments);
 		
 
 			});
@@ -289,7 +308,7 @@ function getFBID(id){
 			        	console.log(err);
 			        }
 			    });
-	 
+/* 
 	 openFB.api(
 			    {
 			        method: 'GET',
@@ -308,5 +327,5 @@ function getFBID(id){
 			        	console.log(err);
 			        }
 			    });
-	 
+	*/ 
 }

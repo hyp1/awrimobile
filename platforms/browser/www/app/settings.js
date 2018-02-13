@@ -132,7 +132,7 @@ drupalgap.settings.facebook = {
 drupalgap.settings.title = 'AWRIMobile';
  
 // App Front Page
-drupalgap.settings.front = 'suche';
+drupalgap.settings.front = 'start';
 //drupalgap.settings.front = 'testpubsub';
 // Theme
 drupalgap.settings.theme = 'app_theme';
@@ -142,13 +142,13 @@ drupalgap.theme = {
 		    theme_footer: 'b',
 		  };
 // Logo
-drupalgap.settings.logo = 'images/re_logo640.jpg';
+//drupalgap.settings.logo = 'app/themes/app_theme/images/logo800x800.png';
 
 // Offline Warning Message. Set to false to hide message.
 drupalgap.settings.offline_message = 'Keine Verbindung zu '+Drupal.settings.site_path+'... !';
 
 // Exit app message.
-drupalgap.settings.exit_message = '' + drupalgap.settings.title + ' schliessen?';
+drupalgap.settings.exit_message = '' + drupalgap.settings.title + ' schliessen ?';
 
 // Loader Animations - http://demos.jquerymobile.com/1.4.0/loader/
 drupalgap.settings.loader = {
@@ -177,6 +177,7 @@ drupalgap.settings.loader = {
 
 Drupal.modules.contrib['facebook'] = {};
 Drupal.modules.contrib['date'] = {};
+//Drupal.modules.contrib['rate'] = {};
 Drupal.modules.contrib['fivestar'] = {};
 Drupal.modules.contrib['flag'] = {};
 Drupal.modules.contrib['avatar'] = {};
@@ -187,21 +188,16 @@ Drupal.modules.contrib['media'] = {};
 
 /** Custom Modules - www/app/modules/custom **/
 
-;
 Drupal.modules.custom['start'] = {};
 Drupal.modules.custom['suche'] = {};
-Drupal.modules.custom['stellen'] = {};
 Drupal.modules.custom['inhalt'] = {};
 Drupal.modules.custom['lesezeichen'] = {};
-//Drupal.modules.custom['mobile_update'] = {};
-//Drupal.modules.custom['mobile_info'] = {};
-
-//Drupal.modules.custom['speech'] = {};
-//Drupal.modules.custom['nodetest'] = {};
-//Drupal.modules.custom['nodeedit'] = {};
 Drupal.modules.custom['upload'] = {};
 Drupal.modules.custom['createfrage'] = {};
-Drupal.modules.custom['testpubsub'] = {};
+
+Drupal.modules.custom['mobile_update'] = {};
+//Drupal.modules.custom['mobile_info'] = {};
+
 
 Drupal.modules.custom['dmt_menu'] = {};
 drupalgap.settings.dmt_menu = {		 
@@ -210,7 +206,7 @@ drupalgap.settings.dmt_menu = {
          "data-icon": 'star',
            "data-iconpos": 'notext',
            "data-mini": 'true',
-           "class": 'ui-btn-left',  //ui-btn-right         	                
+           "class": 'ui-btn-left',  //ui-btn-right           
           }
           };
 
@@ -308,30 +304,34 @@ drupalgap.settings.menus['main_menu'] = {
             
     {
       title:'Rechtsfragen',
-      path:'inhalt',
+      path:'#',
       options:{
         attributes: {
           'data-icon': 'grid',
-          'class': 'ui-btn ui-btn-icon-right'
+          'class': 'ui-btn ui-btn-icon-right',
+        	  'onclick':"pubsub.trigger(\'main-menu-clicked\', { \'page\':\'controls\',\'action\':\'Frage ansehen\' } );",
         }
       }
     },
  
     {
       title:'Suchen',
-      path:'suche',
+      path:'#',
       options:{
         attributes:{
-          'data-icon':'search'
+          'data-icon':'search',
+          	  'onclick':"pubsub.trigger(\'main-menu-clicked\', { \'page\':\'controls\',\'action\':\'Frage suchen\' } );",          	 
         }
       }
     },
     
     {
         title:'Frage stellen',
-        path:'createfrage',
+        path:'#',
         options:{
           attributes:{
+          	  'onclick':"pubsub.trigger(\'main-menu-clicked\', { \'page\':\'controls\',\'action\':\'Frage stellen\' } );",
+          	 
             'data-icon':'comment'
           }
         }
@@ -339,10 +339,12 @@ drupalgap.settings.menus['main_menu'] = {
       
       {
           title:'Lesezeichen',
-          path:'lesezeichen',
+          path:'#',
           options:{
             attributes:{
-              'data-icon':'tag'
+              'data-icon':'tag',
+              'onclick':"pubsub.trigger(\'main-menu-clicked\', { \'page\':\'controls\',\'action\':\'Lesezeichen ansehen\' } );",
+              	 
             }
           }
         },

@@ -27,9 +27,6 @@ function upload_container_id(name,nr){
 	 return 'upload-'+drupalgap_get_page_id()+'-' + name+'-'+nr;
 }
 
-function upload_form_pageshow(){
-	alert("dready");
-}
 
 function upload_custom_form(form, form_state) {
 	  try {
@@ -264,76 +261,8 @@ elems[upload_container_id(name,nr)+'_end']={
 			markup:'</div>',
 		};
 	
-	console.log(elems);
+//	console.log(elems);
 		return elems;
-	/*
-	{name+'-'+nr+'_camera'}:{
-			type:'button',
-			text:'Camera',
-			attributes:{
-				id:upload_container_id(name,nr)+'_camera',
-				onclick:'getPicture(\''+upload_container_id(name,nr)+'\',\''+nr+'\');return false;',		
-				'data-icon':'camera',
-			}
-	}
-	};
-	*/
-
-	/*
-	elements[name+'-'+nr+'_browse']={
-			type:'button',
-			text:'Browse',
-			attributes:{
-				id:upload_container_id(name,nr)+'_browse',
-				onclick:'$(\'#'+upload_container_id(name,nr)+'_file\').click();return false;',		
-				'data-icon':'grid',
-			}
-	};
-	
-
-	elements[name+'-'+nr+'_upload']={
-			type:'button',
-			text:'Upload',
-			attributes:{
-				id:upload_container_id(name,nr)+'_upload',
-				onclick:'uploadFile(\''+upload_container_id(name,nr)+'\');return false;',
-				style:'display:none;',
-				'data-icon':'action',
-			}
-	};
-	
-	elements[name+'-'+nr+'_delete']={
-			type:'button',
-			text:'Delete',
-			attributes:{
-				id:upload_container_id(name,nr)+'_delete',
-				onclick:'deleteFile(\''+upload_container_id(name,nr)+'\');return false;',
-				style:'display:none;',
-				'data-icon':'delete',
-			}
-	};
-	
-	elements[name+'-'+nr+'_select']={
-			type:'file',
-			attributes:{
-				id:upload_container_id(name,nr)+'_file',
-				onchange:'selectedFile(\''+upload_container_id(name,nr)+'\',this);return false;',
-			    'data-icon':'grid',
-			    'style':'display:none;',
-			},
-		//	prefix:'<label for="file-upload" class="custom-file-upload"><i class="fa fa-cloud-upload"></i> Custom Upload</label>'
-	};
-	
-	
-	elements[upload_container_id(name,nr)]={
-			type:'textfield',
-			attributes:{
-				id:upload_container_id(name,nr)+'',
-			},
-		//	prefix:'<label for="file-upload" class="custom-file-upload"><i class="fa fa-cloud-upload"></i> Custom Upload</label>'
-	};
-	*/
-return elem;
 }
 
 function selectedFile(id,input){
@@ -387,6 +316,7 @@ Drupal.services.call({
       $('#'+id+'_camera').hide();
       $('#'+id+'_snapshot').hide();
       $('#'+id+'_delete').show();
+      $('#'+id+'_video').hide();
 //      var msg = 'File uploaded ' + fid + ' !';
  //     drupalgap_alert(msg);
       pubsub.trigger('upload-clicked', { 'page':'upload','action':'Foto  hochgeladen','id':id,'fid':fid } )
@@ -452,26 +382,31 @@ function getSnapshot(id,nr){
  	ctx = document.querySelector('canvas#'+id+'_canvas');
     console.log(ctx);
 	   ctx = ctx.getContext('2d'); 
-		  ctx.drawImage(video,0,0,constraints.width,constraints.height);
+	   ctx.height=constraints.height;
+	      ctx.width=constraints.width;	
+	        
+	   ctx.drawImage(video,0,0,constraints.width,constraints.height);
 		  var dataURI = document.querySelector('canvas#'+id+'_canvas').toDataURL('image/jpeg'); 
-		  console.log(dataURI);
+//		  console.log(dataURI);
 		   $(image).attr('src',dataURI).trigger('create');
 		   $('#'+id+'_upload').show();
 		   $('#'+id+'_delete').show();
+		   $('#'+id+'_image').show();
 }
 
 
 function getPicture(id, nr){
     image = document.querySelector('img#'+id+'_image');
-    
-	if(drupalgap.settings.mode=='phonegap'){
+  	if(drupalgap.settings.mode=='phonegap'){
 		cordova_camera_click(id,nr);
 		return;		
 	}
 	
 
-	video=document.querySelector('video#'+id+'_video');
+	video=$('#'+id+'_video').get(0);
     $('#'+id+'_video').show();
+    $('#'+id+'_image').hide();
+
 	ctx = document.querySelector('canvas#'+id+'_canvas');
 
 	 video.addEventListener('loadedmetadata',function()
@@ -483,8 +418,6 @@ function getPicture(id, nr){
 	      ctx.width=constraints.width;	
 	      image.height=constraints.height;
 	      image.width=constraints.width;	
-//	      ctx = ctx.getContext('2d'); 
-//		  ctx.drawImage(video,0,0,constraints.width,constraints.height);				
 	
 	      	        	      	        
 	      },false);
@@ -494,64 +427,25 @@ function getPicture(id, nr){
   
 	 function handleSuccess(stream) {
 	   var videoTracks = stream.getVideoTracks();
-	   console.log('Got stream with constraints:', constraints);
-	   console.log('Using video device: ' + videoTracks[0].label);
+	 //  console.log('Got stream with constraints:', constraints);
+	 //  console.log('Using video device: ' + videoTracks[0].label);
 	   stream.oninactive = function() {
 	     console.log('Stream inactive');
 	   };
 
-	   console.log(stream,'STREAM');
+	 //  console.log(stream,'STREAM');
 	   window.stream = stream; // make variable available to browser console
 	   video.srcObject = stream;
-	   video.pause();		
+	//      ctx = ctx.getContext('2d');
+	//      ctx.height=constraints.height;
+	//      ctx.width=constraints.width;	
+	//	  ctx.drawImage(video,0,0,constraints.width,constraints.height);				
+	
+	//   video.pause();		
 		  $('#'+id+'_browse').hide();
 		  $('#'+id+'_camera').hide();
 		  $('#'+id+'_snapshot').show();
-	   return;
-	 	 var dataURI = ctx.toDataURL('image/jpeg'); 
-		  $('#'+id+'_image').attr('src',dataURI).trigger('create');
-			 
-		
-	   	  ctx.height=constraints.height;
-	      ctx.width=constraints.width;	
-	      ctx = ctx.getContext('2d'); 
-		  ctx.drawImage(video,0,0,constraints.width,constraints.height);
-		   video.stop();
-		//  var dataURI = ctx.toDataURL('image/jpeg'); 
-	  	
-		  
-
-	   
-	  // ctx = ctx.getContext('2d'); 
-	   //ctx.drawImage(video,0,0,constraints.width,constraints.height);
-		 
-	   var dataURI = ctx.toDataURL('image/jpeg'); 
-			console.log(dataURI);
-		   $('#upload-hello-field_image-0_image').attr('src',dataURI).trigger('create');
-		   $('#upload-hello-field_image-0_image').show();
-	
-		   
-//	   stream.stop();
-	//	context=document.querySelector('img#upload-hello-field_image-0_image');
-	  //    context.fillRect(0,0,w,h);
-		//context = context.getContext('2d'); 
-	  //context.drawImage(video,0,0,constraints.width,constraints.height);
-	  
-	  //ctx = ctx.getContext('2d'); 
-	  //ctx.drawImage(video,0,0,constraints.width,constraints.height);
-	
-	  var dataURI = ctx.toDataURL('image/jpeg'); 
-		console.log(dataURI);
-	   $('#upload-hello-field_image-0_image').attr('src',dataURI).trigger('create');
-	   $('#upload-hello-field_image-0_image').show();
-	   //	  canvas.fillRect(0,0,w,h);
-	//	  context.drawImage(video,0,0,w,h);
-		
-//		canvas=document.querySelector('canvas#mycanv');
-//		  var dataURI = canvas.toDataURL('image/jpeg'); 
-	//		console.log(dataURI);
-//		   console.log(dataURI,'STREAM');	
-//			snap();
+	 
 	 }
 
 	 function handleError(error) {

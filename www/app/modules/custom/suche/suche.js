@@ -11,7 +11,7 @@ function suche_menu() {
   catch (error) { console.log('start_menu - ' + error); }
 }
 function suche_pageshow(){
-	$('#result-count').html('<h2>Suchresultate</h2>');
+//	$('#result-count').html('<h2>Suchresultate</h2>');
 
 	if(drupalgap.settings.mode=='phonegap'){
 		window.plugins.speechRecognition.requestPermission(
@@ -30,7 +30,7 @@ function speech(){
 	options = {
 			 language:'de-DE',
 			  matches:10,
-			  prompt:'Sprechen Sie',      // Android only
+			  prompt:'Sprechen Sie deutlich',      // Android only
 			  showPopup:true,  // Android only
 			  showPartial:true, 
 			}
@@ -49,8 +49,6 @@ function speech(){
 				  
 			  }, options);
 	
-	
-
 };
 
 function suche() {
@@ -119,14 +117,14 @@ function suche_search3(options) {
 
 function dosearch2(){
 	if($('#search-2').textinput().val().length<3){
-		drupalgap_alert("Bitte Stichwörter eingeben");
+		Alert("Bitte Stichwörter eingeben");
 	return;
 	}		
 suche_search3({
     success: function(result) {
-    	var items=[];
+    	var items=[]; 
     	for(i=0;i<result.length;i++){
-    		items.push(l('<h2>'+result[i].title+'</h2><p>'+result[i].snippet+'</p><p>'+result[i].extra.comment+'</p>','node/'+result[i].node.nid));
+    		items.push(l('<h2>'+result[i].title+'</h2><p>'+result[i].snippet+'</p><p>'+result[i].extra.comment+'</p>','node/'+result[i].node['vid']));
     	}
     	$('#result-count').html(result.length+' Resultate');
     	 drupalgap_item_list_populate('#resultat', items);

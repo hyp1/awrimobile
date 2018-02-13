@@ -22,11 +22,11 @@ background-image:url('../images/awri32-white.png');
 background-image:url('../images/awri32-black.png');
 }
 
-#bookmark_toggle.active{
+#isbookmark.active{
 	background-color:#CAFF70;
 }
 
-#bookmark_toggle.inactive{
+#isbookmark.inactive{
 	background-color:#FF7256;
 }
 .field-name-upload-createfrage-field-image-1-start{
@@ -45,11 +45,39 @@ background-image:url('../images/awri32-black.png');
 	display:none;
 }
 .splash{
-	background-image:url("../images/splash.png");
+	background-image:url("../images/logo800x800.png");
 	 background-size:     cover;                      /* <------ */
     background-repeat:   no-repeat;
     background-position: center center;  
 }
-.body{
-	font-family: 'Oswald', sans-serif;
+
+
+@font-face { 
+	font-family: 'Noto';
+    src: url('NotoSans-Bold.ttf') format('truetype'); 
+}
+
+.body , p, li, a, , h2{
+	font-family: 'Noto', sans-serif;	
+}
+.ui-content{
+background-color:#e2e2e2;
+font-family: 'Noto', sans-serif;
+}
+
+body .ui-page{
+background-color:#e2e2e2;
+}
+
+
+select#field_kanton {
+	
+	
+   color: #000;
+   background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#779126, #779126 40%, #779126);
+   background-color: #e2e2e2;
+   -webkit-border-radius: 20px;
+   -moz-border-radius: 20px;
+   border-radius: 20px;
+   padding-left: 15px;
 }

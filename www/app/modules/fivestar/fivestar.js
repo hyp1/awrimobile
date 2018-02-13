@@ -433,10 +433,10 @@ function theme_fivestar_average(variables) {
     );
     var count = variables.count.value;
     var html = '<div ' + drupalgap_attributes(variables.attributes) + '>' +
-      '<p>Average: ' + (average/count).toFixed(1) +
+      '<p>'+'Durschschnitt'+': ' + (average/count).toFixed(1) +
       ' (' +
         count + ' ' +
-        drupalgap_format_plural(count, 'vote', 'votes')  +
+        drupalgap_format_plural(count, 'Stimme', 'Stimmen')  +
       ')</p>'
     '</div>';
 

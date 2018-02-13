@@ -63,6 +63,8 @@ return content;
 			    	    class: 'lz-css-class'
 			    	  }
 		 };	
+		  
+
 		  content['lesezeichen_grid'] = {
 		  	      theme: 'view',
 		  	      format: 'ul',
@@ -102,104 +104,10 @@ return content;
 }
 
 
-function _toggleBookmark(nid){
-	flag_is_flagged('bookmarks', nid, Drupal.user.uid,  {
-	      success: function(result) {
-	          try {
-	        	  if(JSON.parse(result)==true){
-	             	console.log(result,'ISFLAGGED'+nid);
-	      _removeBookmark(nid);
 
-	}
-	  if(JSON.parse(result)==false){
-       	console.log(result,'IS NOT FLAGGED'+nid);
-_addBookmark(nid);
-
-
-
-}
-	 
-	          }
-	          catch (error) { console.log('_my_module_flag_count_pageshow - success - ' + error); }
-	        },
-	  	 error: function(result) {
-	  	        try {
-	  	        	console.log(result,'add err' + nid);
-	  	        }
-	  	        catch (error) { console.log('_my_module_flag_count_pageshow - success - ' + error); }
-	  	      }
-	    });	
-	
-}
-
-
-
-function _addBookmark(nid){
-
-	   flag_flag('bookmarks', nid, 'flag', Drupal.user.uid, true,
-		 {
-      success: function(result) {
-        try {
-       
-     	   setFlag(1);
- 	      $('#bookmark').attr('data-theme', 'b').removeClass('ui-btn-inactive')
-	      .addClass('ui-btn-active').trigger('create');
-        }
-        catch (error) { console.log('_my_module_flag_count_pageshow - success - ' + error); }
-      },
-	 error: function(result) {
-	        try {
-	        	console.log(result,'add err');
-	     //	   $(lesezeichen_container_id(nid)).hide();
-	   //     	 setFlag(0);
-	        	//drupalgap_goto(path, { reloadPage: true });
-	  	   
-	        }
-	        catch (error) { console.log('_my_module_flag_count_pageshow - success - ' + error); }
-	      }
-  }
-);	 
-
-}
-
-function _removeBookmark(nid){
-
-	      flag_flag('bookmarks', nid, 'unflag', Drupal.user.uid, false,
-			 {
-	        success: function(result) {
-	          try {
-	       	   setFlag(0);
-	       	   $('#bookmark').attr('data-theme', 'b').removeClass('ui-btn-active')
-			      .addClass('ui-btn-inactive').trigger('create');	       	       	
-	          }
-	          catch (error) { 
-	        	
-	        	  console.log('_removeBookmark - success - ' + error); }
-	        }
-	    }
-	 );	 
-}
-
-
-function _deleteBookmark(nid){
-
-    flag_flag('bookmarks', nid, 'unflag', Drupal.user.uid, false,
-		 {
-      success: function(result) {
-        try {
-     	   setFlag(0);
-     	   $('#bookmark').attr('data-theme', 'b').removeClass('ui-btn-active')
-		      .addClass('ui-btn-inactive').trigger('create');
-     
-     	
-     	   drupalgap_goto(drupalgap_path_get(), {reloadPage:true});
-        }
-        catch (error) { 
-      	
-      	  console.log('_removeBookmark - success - ' + error); }
-      }
-  }
-);	 
+function gotoBookmark(nid){
+	drupalgap_goto('node/'+nid);
+	_isBookmark(nid,drupalgap_get_page_id());	
 }
 
 /**
@@ -208,14 +116,28 @@ function _deleteBookmark(nid){
 function lesezeichen_list_row(view, node, variables) {
 	  try {
 		  var html="";
-    		
-			 html=html+l(node.title,'node/'+node.nid);
-			 html=html+l('link2','#',{attributes:{'id':'bookmark-btn'+node.nid,onclick:'_deleteBookmark('+node.nid+')','data-icon':'trash','data-iconpos':'notext','data-inline':'true'}})	 
-//         $('#bookmark-cnt').html(view.count).trigger('create');
+    	var content={};
+
+		  btn2=bl('Ansehen','#',{attributes:{
+	    		'class':'ui-btn ui-btn-inline ui-mini ui-icon-eye ui-btn-icon-right',
+	    		'onclick':'gotoBookmark('+node.nid+')',
+		  }});
+			btn=bl('link2','#',{attributes:{'id':'bookmark-btn'+node.nid,onclick:'_deleteBookmark('+node.nid+')','data-icon':'trash','data-iconpos':'notext','data-inline':'true'}});
+
+		  content['html']={
+					markup:'<div data-role="collapsible">'
+				    +'<h2>'+(1+node._position)+'.) '+node.fbname+' <p>'+node.title+'</p></h2>'
+				    +'<p>'+node.title+'</p><div style="float:right;">'+drupalgap_render(btn)+drupalgap_render(btn2)+'</div></div>'			    		
+				    		
+			};
+		
+//			 html=drupalgap_render(content);
+			// html+=html+l('link2','#',{attributes:{'id':'bookmark-btn'+node.nid,onclick:'_deleteBookmark('+node.nid+')','data-icon':'trash','data-iconpos':'notext','data-inline':'true'}})	 
+   //      $('#bookmark-cnt').html(view.count).trigger('create');
 			 $('.lz-css-class').html(' '+ (1+view.page)+'/'+view.pages).trigger('create');	
 			 $('.my-css-class').html('Ihre Lesezeichen: '+ view.count).trigger('create');	
 	 
-	    return html;
+	    return drupalgap_render(content);
 	  }
 	  catch (error) { console.log('example5_list_row - ' + error); }
 	}
