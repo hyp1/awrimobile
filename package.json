@@ -5,7 +5,8 @@
     "cordova": {
         "platforms": [
             "android",
-            "browser"
+            "browser",
+            "ios"
         ],
         "plugins": {
             "cordova-plugin-console": {},
@@ -31,7 +32,7 @@
     "dependencies": {
         "cordova-android": "^6.3.0",
         "cordova-browser": "^4.1.0",
-        "cordova-ios": "^4.4.0",
+        "cordova-ios": "^4.5.4",
         "cordova-plugin-app-version": "^0.1.9",
         "cordova-plugin-camera": "^2.3.0",
         "cordova-plugin-compat": "~1.1.0",
