@@ -394,6 +394,7 @@ drupalgap.settings.blocks.app_theme = {
     primary_local_tasks: { },
   },
   content: {
+	  /*
 	  fb_login_block: {
 	      pages: {
 		        value: ['user/*'],
@@ -405,6 +406,7 @@ drupalgap.settings.blocks.app_theme = {
 		      },
 	
 	  },
+	  */
     messages: { },
     main: { },
 
