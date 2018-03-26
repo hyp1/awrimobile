@@ -412,6 +412,14 @@ module.exports = [
     "clobbers": [
       "window.plugins.socialsharing"
     ]
+  },
+  {
+    "id": "cordova-plugin-shake.Shake",
+    "file": "plugins/cordova-plugin-shake/www/shakeNative.js",
+    "pluginId": "cordova-plugin-shake",
+    "clobbers": [
+      "shake"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -434,7 +442,8 @@ module.exports.metadata =
   "cordova-plugin-vibration": "2.1.6",
   "cordova-plugin-whitelist": "1.3.3",
   "es6-promise-plugin": "4.1.0",
-  "cordova-plugin-x-socialsharing": "5.2.1"
+  "cordova-plugin-x-socialsharing": "5.2.1",
+  "cordova-plugin-shake": "0.6.0"
 };
 // BOTTOM OF METADATA
 });

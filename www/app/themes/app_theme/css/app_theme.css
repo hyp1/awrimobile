@@ -1,3 +1,103 @@
+/**
+ * System Messages
+ */
+
+
+.ui-mobile .ui-page-active {
+    background-color: white;
+}
+
+.ui-listview > li p {
+  white-space: normal;
+}
+
+div.messages {
+  background-position: 8px 8px; /* LTR */
+  background-repeat: no-repeat;
+  border: 1px solid;
+  margin: 6px 0;
+  padding: 10px 10px 10px 50px; /* LTR */
+}
+
+div.status {
+  background-image: url(../images/message-24-ok.png);
+  border-color: #be7;
+}
+div.status,
+.ok {
+  color: #234600;
+}
+div.status,
+table tr.ok {
+  background-color: #f8fff0;
+}
+
+div.warning {
+  background-image: url(../images/message-24-warning.png);
+  border-color: #ed5;
+}
+div.warning,
+.warning {
+  color: #840;
+}
+div.warning,
+table tr.warning {
+  background-color: #fffce5;
+}
+
+div.error {
+  background-image: url(../images/message-24-error.png);
+  border-color: #ed541d;
+}
+div.error,
+.error {
+  color: #8c2e0b;
+}
+div.error,
+table tr.error {
+  background-color: #fef5f1;
+}
+div.error p.error {
+  color: #333;
+}
+
+div.messages ul {
+  margin: 0 0 0 1em; /* LTR */
+  padding: 0;
+}
+div.messages ul li {
+  list-style-image: none;
+}
+
+/**
+ * Lists
+ */
+.dg_empty_list_header {
+  line-height: 0em;
+  margin: 0em 0em 1.3em 0em;
+}
+
+**
+ * Images
+ */
+
+/**
+ * Don't let images stretch out of their parent container in the main content
+ * div. Ignore google images.
+ */ 
+div[role="main"] img,
+div[role="banner"] img,
+#_drupalgap_splash_content img {
+  width: auto !important; 
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+}
+div[role="main"] .gm-style img {
+  max-height: unset;
+  max-width: unset;
+}
+
 
 .ui-icon-loading {
 	background: url("../images/ajax-loader.gif");
@@ -80,4 +180,13 @@ select#field_kanton {
    -moz-border-radius: 20px;
    border-radius: 20px;
    padding-left: 15px;
+}
+
+div.comment_body > p {
+	white-space: normal;
+	text-overflow: none;
+}
+
+div#tag-counter{
+	color:#2ad;
 }

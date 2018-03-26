@@ -25,6 +25,9 @@
     </platform>
     <icon src="res/icon.png" />
     <splash src="res/screen/android/1280x1280.png" />
+    <engine name="android" spec="^6.3.0" />
+    <engine name="browser" spec="^4.1.0" />
+    <engine name="ios" spec="^4.5.4" />
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
     <plugin name="cordova-plugin-camera" spec="^2.3.0" />
     <plugin name="cordova-plugin-compat" spec="~1.1.0" />
@@ -38,12 +41,10 @@
     <plugin name="cordova-plugin-media-capture" spec="^3.0.1" />
     <plugin name="cordova-plugin-network-information" spec="~1.3.3" />
     <plugin name="cordova-plugin-printer" spec="^0.7.3" />
+    <plugin name="cordova-plugin-shake" spec="^0.6.0" />
     <plugin name="cordova-plugin-speechrecognition" spec="^1.2.0" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-vibration" spec="~2.1.5" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.2" />
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.2.1" />
-    <engine name="android" spec="^6.3.0" />
-    <engine name="browser" spec="^4.1.0" />
-    <engine name="ios" spec="^4.5.4" />
 </widget>

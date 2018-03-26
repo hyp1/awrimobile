@@ -19,6 +19,7 @@ Drupal.settings.info_url = 'https://awri.ch/app/info';
 
 // Site Path (do not use a trailing slash)
 Drupal.settings.site_path = 'https://awri.ch'; // e.g. http://www.example.com
+//Drupal.settings.site_path = 'http://localhost/stage.awri.ch'; // e.g. http://www.example.com
 
 // Default Services Endpoint Path
 Drupal.settings.endpoint = 'drupalgap';
@@ -129,7 +130,7 @@ drupalgap.settings.facebook = {
  *************/
 
 // App Title
-drupalgap.settings.title = 'AWRIMobile';
+drupalgap.settings.title = 'AWRI';
  
 // App Front Page
 drupalgap.settings.front = 'start';
@@ -194,6 +195,7 @@ Drupal.modules.custom['inhalt'] = {};
 Drupal.modules.custom['lesezeichen'] = {};
 Drupal.modules.custom['upload'] = {};
 Drupal.modules.custom['createfrage'] = {};
+Drupal.modules.custom['print'] = {};
 
 Drupal.modules.custom['mobile_update'] = {};
 //Drupal.modules.custom['mobile_info'] = {};
@@ -392,6 +394,12 @@ drupalgap.settings.blocks.app_theme = {
     primary_local_tasks: { },
   },
   content: {
+	  fb_login_block: {
+		  roles: {
+		        value: ['anonymous user'],
+		        mode: 'include',
+		      }
+	  },
     messages: { },
     main: { },
 
@@ -408,7 +416,7 @@ drupalgap.settings.blocks.app_theme = {
 	 // powered_by: { }
     control_block:{
    	 pages: {
-   	        value: ['inhalt','node/*','suche','createfrage'],
+   	        value: ['inhalt','node/*','suche','createfrage','zufall_page'],
    	        mode: 'include'
    	      }
    },
@@ -501,7 +509,7 @@ drupalgap.settings.menus.regions['footer'] = {
         }
       },
       pages: {
-        value: ['suche','lesezeichen'],
+        value: ['suche','lesezeichen','print/*'],
         mode: 'include'
       }
     },

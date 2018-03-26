@@ -214,3 +214,11 @@ function system_services_postprocess(options, result) {
 		console.log('system_services_postprocess - ' + error);
 	}
 }
+
+
+var onShake = function () {
+	//alert("SHAKE");
+	  drupalgap_goto('zufall_page',{reloadPage:true});
+	};
+	
+	shake.startWatch(onShake, 40 /*, onError */);

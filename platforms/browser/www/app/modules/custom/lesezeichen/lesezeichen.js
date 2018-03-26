@@ -122,12 +122,12 @@ function lesezeichen_list_row(view, node, variables) {
 	    		'class':'ui-btn ui-btn-inline ui-mini ui-icon-eye ui-btn-icon-right',
 	    		'onclick':'gotoBookmark('+node.nid+')',
 		  }});
-			btn=bl('link2','#',{attributes:{'id':'bookmark-btn'+node.nid,onclick:'_deleteBookmark('+node.nid+')','data-icon':'trash','data-iconpos':'notext','data-inline':'true'}});
+			btn=bl('Entfernen','#',{attributes:{'id':'bookmark-btn'+node.nid,onclick:'_deleteBookmark('+node.nid+')','data-icon':'delete','data-mini':'true','data-inline':'true'}});
 
 		  content['html']={
 					markup:'<div data-role="collapsible">'
-				    +'<h2>'+(1+node._position)+'.) '+node.fbname+' <p>'+node.title+'</p></h2>'
-				    +'<p>'+node.title+'</p><div style="float:right;">'+drupalgap_render(btn)+drupalgap_render(btn2)+'</div></div>'			    		
+				    +'<h2>'+((view.page*10)+ 1+node._position)+'.) '+node.fbname+' <p>'+node.title+'</p></h2>'
+				    +'<p>'+node.title+'<span style="float:right;height:50px;">'+drupalgap_render(btn)+drupalgap_render(btn2)+'</span></p></div>'			    		
 				    		
 			};
 		
@@ -264,8 +264,7 @@ function _lesezeichen_flag_count_pageshow(options) {
 	           // Check options.entity_type and/or options.bundle here to customize
 	           // the message per content type.
 	           var container_id = lesezeichen_flag_count_container_id(flag.name, options.entity_id);	      
-	           var html = '<p> ' + result.count + ' ' + drupalgap_format_plural(result.count, t('time'), t('times')) +' '+ t('Flagged')+ '!</p>';
-	           html = '<input type="hidden" value="'+ result.count+'"> ' + result.count + ' Persenen haben das Lesezeichen gesetzt</p>';
+	           var html = '<div id="tag-counter">' + result.count + ' ' + drupalgap_format_plural(result.count, 'Mitglied hat','Mitglieder haben') +' dieses Lesezeichen gesetzt</div>';
 
 	           $('#' + container_id).html(html).trigger('create');
 	         }

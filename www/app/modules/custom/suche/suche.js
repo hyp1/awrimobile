@@ -63,10 +63,11 @@ function suche() {
     	     
     content['c2'] = {
     		 theme: 'button',
-    		  text: 'Weiter',
+    		  text: 'Suchen',
     		  attributes: {
     		    onclick: 'dosearch2()',
     		    'data-theme': 'b',
+    		    'data-icon':'search',
     		  },
     		
     };
@@ -78,6 +79,7 @@ function suche() {
    		  attributes: {
    		    onclick: 'speech()',
    		    'data-theme': 'b',
+   		    'data-icon':'mic',   	    	
    		  },
    		
    };

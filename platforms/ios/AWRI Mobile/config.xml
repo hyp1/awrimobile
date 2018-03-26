@@ -67,6 +67,10 @@
         <param name="ios-package" value="SocialSharing" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="CDVShake">
+        <param name="ios-package" value="CDVShake" />
+        <param name="onload" value="true" />
+    </feature>
     <name>AWRI Mobile</name>
     <description>
         Alles was Recht ist. Schweizer Datenbank für Rechtsfragen

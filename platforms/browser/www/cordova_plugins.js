@@ -439,6 +439,36 @@ module.exports = [
         "clobbers": [
             "window.FileTransfer"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-device-motion/www/Acceleration.js",
+        "id": "cordova-plugin-device-motion.Acceleration",
+        "pluginId": "cordova-plugin-device-motion",
+        "clobbers": [
+            "Acceleration"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-device-motion/www/accelerometer.js",
+        "id": "cordova-plugin-device-motion.accelerometer",
+        "pluginId": "cordova-plugin-device-motion",
+        "clobbers": [
+            "navigator.accelerometer"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-device-motion/src/browser/AccelerometerProxy.js",
+        "id": "cordova-plugin-device-motion.AccelerometerProxy",
+        "pluginId": "cordova-plugin-device-motion",
+        "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-shake/www/shake.js",
+        "id": "cordova-plugin-shake.Shake",
+        "pluginId": "cordova-plugin-shake",
+        "clobbers": [
+            "shake"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -462,7 +492,9 @@ module.exports.metadata =
     "cordova-plugin-app-version": "0.1.9",
     "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-speechrecognition": "1.1.2",
-    "cordova-plugin-file-transfer": "1.7.1"
+    "cordova-plugin-file-transfer": "1.7.1",
+    "cordova-plugin-device-motion": "2.0.0",
+    "cordova-plugin-shake": "0.6.0"
 }
 // BOTTOM OF METADATA
 });

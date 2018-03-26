@@ -57,10 +57,16 @@
         },
         "cordova-plugin-file-transfer": {
             "PACKAGE_NAME": "ch.awri.mobile"
+        },
+        "cordova-plugin-shake": {
+            "PACKAGE_NAME": "ch.awri.mobile"
         }
     },
     "dependent_plugins": {
         "es6-promise-plugin": {
+            "PACKAGE_NAME": "ch.awri.mobile"
+        },
+        "cordova-plugin-device-motion": {
             "PACKAGE_NAME": "ch.awri.mobile"
         }
     }

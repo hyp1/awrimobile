@@ -48,16 +48,16 @@ function start_page() {
 		content['my_grid'] = {
 			theme : 'jqm_grid',
 			columns : 2,
-			items : [ bl('Rechtsfragen', '#',{attributes:{'data-icon':'section',onclick:'pubsub.trigger(\'main-menu-clicked\', { \'page\':\'start\',\'action\':\'Fragen ansehen\' } )'}}), 
-			          bl('Suchen', '#',{attributes:{'data-icon':'search',
+			items : [ bl('<img src="'+drupalgap_get_path('theme','app_theme')+'/images/icon_paging.png"><br>Rechtsfragen', '#',{attributes:{onclick:'pubsub.trigger(\'main-menu-clicked\', { \'page\':\'start\',\'action\':\'Fragen ansehen\' } )'}}), 
+			          bl('<img src="'+drupalgap_get_path('theme','app_theme')+'/images/icon_search.png"><br>Suchen', '#',{attributes:{
 			        	  onclick:'pubsub.trigger(\'main-menu-clicked\', { \'page\':\'start\',\'action\':\'Frage suchen\' } )'}}),
-			       	bl('Lesezeichen', '#', {
-						attributes:{'data-icon':'tag',
+			       	bl('<img src="'+drupalgap_get_path('theme','app_theme')+'/images/icon_tags.png"><br>Lesezeichen', '#', {
+						attributes:{
 							onclick:'pubsub.trigger(\'main-menu-clicked\', { \'page\':\'start\',\'action\':\'Lesezeichen ansehen\' } )',
 },
 										'reloadPage' : 'true',						 
 					}), 
-					bl('Rechtsfrage stellen', '#',{attributes:{'data-icon':'action',
+					bl('<img src="'+drupalgap_get_path('theme','app_theme')+'/images/icon_send.png"><br>Frage stellen', '#',{attributes:{
 						onclick:'pubsub.trigger(\'main-menu-clicked\', { \'page\':\'start\',\'action\':\'Frage stellen\' } )',
 						}}),
 			// bl('Rechtsfrage stellen', 'node/add/rechtsfrage'),
@@ -69,9 +69,10 @@ function start_page() {
 			text : 'Neueste'
 		};
 */
+		/*
 		content['grid'] = {
 			theme : 'view',
-			title:'Neueste',
+		//	title:'Neueste',
 			//format : 'u',
 			//columns : 1,
 			path : 'drupalgap/views_datasource/drupalgap_content',
@@ -81,7 +82,7 @@ function start_page() {
 				id : 'start_grid_view'
 			}
 		};
-
+*/
 		/*
 		 * content['example5_grid'] = { theme: 'view', format: 'grid',
 		 * columns:2, path: 'drupalgap/views_datasource/drupalgap_content',
@@ -140,6 +141,12 @@ function start_block_info() {
 			delta : 'control_block',
 			module : 'start'
 		};
+		
+		blocks['fb_login_block'] = {
+				delta : 'fb_login_block',
+				module : 'start'
+		};
+		
 		return blocks;
 	} catch (error) {
 		console.log('start_block_info - ' + error);
@@ -176,6 +183,21 @@ function start_block_view(delta, region) {
 			console.log(region);
 			content['control_block'] = theme_controls({});
 
+			break;
+		case 'fb_login_block':
+			//alert("OK");
+			content['my_button_link'] = {
+					  theme: 'button_link',
+					  text: 'Mit Facebook anmelden',
+					  path: Drupal.settings.site_path +'/user/simple-fb-connect?destination=http://localhost/oauthcallback.html',
+options:{InAppBrowser:true,reloadPage:true},
+			attributes:{
+				'class': '.ui-nodisc-icon',
+	//	          onclick: "facebook_onclick()",
+		          'data-icon': 'info' 
+			}
+			};
+			
 			break;
 		default:
 
@@ -226,10 +248,10 @@ function theme_fbpic(fbfield) {
 	if (Drupal.user.uid == 0)
 		return '<p>' + l('Bitte anmelden', 'user/login') + '</p>';
 	if (fbfield['und'] === undefined)
-		pic = '<img src="' + drupalgap_get_path('module', 'start')
+		pic = '<img id="fbpic" src="' + drupalgap_get_path('module', 'start')
 				+ '/anonymous.png" style="border-radius: 50%;"/>';
 	else if (fbfield['und'][0].value > 0)
-		pic = '<img src="https://graph.facebook.com/' + fbfield['und'][0].value
+		pic = '<img id="fbpic" src="https://graph.facebook.com/' + fbfield['und'][0].value
 				+ '/picture?type=small" style="border-radius: 50%;"/>';
 
 	return pic;

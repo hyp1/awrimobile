@@ -50,6 +50,7 @@
 		1D6918051D1C49DBB9683D03 /* SocialSharing.m in Sources */ = {isa = PBXBuildFile; fileRef = F1027EAE07134F64A682B835 /* SocialSharing.m */; };
 		BC7791BF59974CCF9E12DE39 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EB0FA5412F4111B5DD2B97 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		42CC3C21E54C4A6281FCB273 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FEA0D22F3C44A84871F38FD /* MessageUI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		806767CE46204C6E9B907843 /* CDVShake.m in Sources */ = {isa = PBXBuildFile; fileRef = 09FD0870B78C4D8AAF2BA6DA /* CDVShake.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,6 +148,8 @@
 		1EF1624A55014F9BB03DA7F4 /* SocialSharing.h */ = {isa = PBXFileReference; name = "SocialSharing.h"; path = "cordova-plugin-x-socialsharing/SocialSharing.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 		B5EB0FA5412F4111B5DD2B97 /* Social.framework */ = {isa = PBXFileReference; name = "Social.framework"; path = "System/Library/Frameworks/Social.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 		7FEA0D22F3C44A84871F38FD /* MessageUI.framework */ = {isa = PBXFileReference; name = "MessageUI.framework"; path = "System/Library/Frameworks/MessageUI.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		09FD0870B78C4D8AAF2BA6DA /* CDVShake.m */ = {isa = PBXFileReference; name = "CDVShake.m"; path = "cordova-plugin-shake/CDVShake.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		F484E0225E664483A8E13C62 /* CDVShake.h */ = {isa = PBXFileReference; name = "CDVShake.h"; path = "cordova-plugin-shake/CDVShake.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -317,6 +320,8 @@
 				F1027EAE07134F64A682B835 /* SocialSharing.m */,
 				F593FC3CCEA94175A8C7C031 /* NSString+SSURLEncoding.h */,
 				1EF1624A55014F9BB03DA7F4 /* SocialSharing.h */,
+				09FD0870B78C4D8AAF2BA6DA /* CDVShake.m */,
+				F484E0225E664483A8E13C62 /* CDVShake.h */,
 			);
 			name = Plugins;
 			path = "AWRI Mobile/Plugins";
@@ -453,6 +458,7 @@
 				FD5EC278C0BE4CC59135A030 /* CDVVibration.m in Sources */,
 				23954E7DE35549F485F8C614 /* NSString+SSURLEncoding.m in Sources */,
 				1D6918051D1C49DBB9683D03 /* SocialSharing.m in Sources */,
+				806767CE46204C6E9B907843 /* CDVShake.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

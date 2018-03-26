@@ -6,11 +6,47 @@ function inhalt_menu() {
       title: 'Rechtsfragen',
       page_callback: 'inhalt',
       pageshow: 'inhalt_pageshow',    	  
-    };    
+    };   
+      
+      items['zufall_page'] = {
+  		    page_callback: 'zufall_page',
+  		  };
+      
     return items;
   }
   catch (error) { console.log('inhalt_menu - ' + error); }
 }
+
+function zufall_page() {
+	  try {
+	    var content = {};
+	    content['my_articles_list'] = {
+	      theme: 'view',
+	      format: 'ul',
+	      path: 'awrimobile/zufall', /* the path to the view in Drupal */
+	      row_callback: 'inhalt_list_row',
+	      empty_callback: 'my_module_articles_list_empty',
+	      attributes: {
+	        id: 'zufall_list_view'
+	      }
+	    };
+	    
+	  //  content['next'] = {
+	  //  	      markup: '<br/><div>'+bl('Neu','zufall_page',{reloadPage:true})+'</div>'
+	  //  	    };
+	    
+	    return content;
+	  }
+	  catch (error) { console.log('my_module_articles_page - ' + error); }
+	}
+
+function zufall_list_row(view, row, variables) {
+	  try {
+		  //drupalgap_goto('node/' + row.nid);
+	    return '<h2>'+row.title+'</h2>'+bl(t('Ansehen'), 'node/' + row.nid);
+	  }
+	  catch (error) { console.log('my_module_articles_list_row - ' + error); }
+	}
 
 
 function inhalt() {
@@ -142,7 +178,7 @@ if(drupalgap.settings.mode=='web-app')back='<li class="ui-block-a">'+l(t('Zurüc
 	//		+ '<li class="ui-block-e"><a href="#" onclick="javascript:drupalgap_goto(\'user-listing\', {});" data-icon="eye" class="ui-link ui-btn ui-icon-info ui-btn-icon-top">Ansehen</a></li>'
 	//		+
 
-			'</ul></div>';
+			+'</ul></div>';
 
 	var content={};		
 		content['ctr-' + pid] = {
@@ -164,9 +200,11 @@ node=JSON.parse(variable_get('node'));
 	'<a id="awril" href="javascript:window.open(\''+Drupal.settings.site_path+'/node/'	+ node.nid + '\', \'_system\', \'location=yes\');" data-role="button" data-icon="awri32" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="'+drupalgap.theme.theme_header+'"><span class="ui-btn-inner ui-btn-corner-all"><span>&nbsp;</span></span></a>';
 	mark4=''+
 	'<a id="facebook" href="javascript:window.open(\'https://facebook.com/'	+ fbmid + '\', \'_system\', \'location=yes\');" data-role="button" data-icon="facebook" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="'+drupalgap.theme.theme_header+'"><span class="ui-btn-inner ui-btn-corner-all"><span>&nbsp;</span></span></a>';
+	mark6=''+
+	'<a id="print" href="#" onclick="drupalgap_goto(\'print/'+node.nid+'\')" data-role="button" data-icon="printer" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="'+drupalgap.theme.theme_header+'"><span class="ui-btn-inner ui-btn-corner-all"><span>&nbsp;</span></span></a>';
 
 	
-	mark5='<a onclick="share(\''+Drupal.settings.site_path+'/node/'+node.nid+'\',\''+node.nid+'\');" data-role="button" data-icon="link" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="'+drupalgap.theme.theme_header+'"><span class="ui-btn-inner ui-btn-corner-all"><span>&nbsp;</span></span></a>'+
+	mark5='<a onclick="share(\''+Drupal.settings.site_path+'/node/'+node.nid+'\',\''+node.nid+'\');" data-role="button" data-icon="share" data-iconpos="left" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="'+drupalgap.theme.theme_header+'"><span class="ui-btn-inner ui-btn-corner-all"><span>&nbsp;</span></span></a>'+
 '<div data-role="popup" id="popupMenu-'+drupalgap_get_page_id()+'-'+node.nid+'" data-theme="b">'+
         '<ul data-role="listview" data-inset="true" style="min-width:210px;">'+
             '<li data-role="list-divider">Diesen Beitrag teilen auf:</li>'+
@@ -174,7 +212,7 @@ _getSocialHTML('https://awri.ch/node/'+node.nid);
 	'</ul>'+
 '</div>";';
 	
-return mark+mark3+mark4+mark5;
+return mark+mark3+mark4+mark6+mark5;
 }
 
 function inhalt_list_row(view, row, variables) {
@@ -185,10 +223,10 @@ function inhalt_list_row(view, row, variables) {
 	var content={};	
 	theme_controls(); 
 		content.card={
-			markup:'<div data-role="collapsible" data-inset="true" data-collapsed="false" data-iconpos="left">'+    
+			markup:'<div data-role="collapsible" data-inset="true" data-collapsed="false" data-iconpos="left" style="white-space: normal">'+    
 //    '<h2><img src="'+drupalgap_get_path('theme','app_theme')+'/images/anonymous.png" id="node_picture" width="28" height="28">&nbsp;&nbsp;&nbsp;'+row.field_fbname+'</h2><p id="body">'+row.title+'</p>'+
-    '<h2>'+theme_pic(row.field_fbid,28,28)+'&nbsp;&nbsp;&nbsp;'+row.field_fbname+' '+row.created+
-    '<span class="ui-li-count ui-btn-up-c ui-btn-corner-all">'+row.comment_count+'</span>'+
+    '<h2><div stlye="margin:auto;">'+theme_pic(row.field_fbid,28,28)+'<div><div>'+row.created+'<br/>'+row.field_fbname+
+    '</div><span class="ui-li-count ui-btn-up-c ui-btn-corner-all">'+row.comment_count+'</span>'+
     '</h2><div><p id="body"><div>'+theme_pic(row.field_fbid,70,70)+'</div>'+row.body+'</p></div>'+theme_small_controls(row)
 	+'</div>'
 	};
@@ -394,6 +432,22 @@ function inhalt_node_page_view_alter_rechtsfrage(node, options) {
 	    		};  
 
 	
+	  /*  
+	    if(Drupal.user.uid>0){
+			Drupal.settings.language_default='und';
+			var id = 'node_comment_container_' + node.nid;
+		
+			var form=drupalgap_get_form('comment_edit', null, node);
+			
+			   content['c6'] = {
+			    		  markup: drupalgap_render(form),	    		
+			    		};  
+			   
+	//			console.log(form.validate);
+		
+	//		getFBID('#edit-comment-edit-'+node.nid+'-field-fbid-'+Drupal.settings.language_default+'-0-value');
+}			
+*/	    
 	    options.success(content);
 		 _getComments(node);
 
@@ -422,7 +476,7 @@ function _getComments(node){
 			   // 	console.log(comments[i],'COMMENT PID????');
 			    	sub='';
 			    	comments[i].language="und";
-			    	if(comments[i].pid!=0)sub='<div "subcomment"><a href="#" class="ui-btn ui-icon-comment ui-btn-icon-notext ui-btn-inline ui-mini ui-corner-all">No text</a></div>';
+			    	if(comments[i].pid!=0)sub='<div id="subcomment"><a href="#" class="ui-btn ui-icon-comment ui-btn-icon-notext ui-btn-inline ui-mini ui-corner-all">No text</a></div>';
 			    	//	node['comments'].push(comments[i]);
 			    	//else subs.push(comments[i]);
 		  			 //variable_set('subcomments',subs);
@@ -444,15 +498,7 @@ function _getComments(node){
 		//	node.language='und';
 			//ent=drupalgap_get_entity('index','comment',null);
 			//console.log(ent,"ENTITY");
-if(Drupal.user.uid>0){
-			Drupal.settings.language_default='und';
-			var id = 'node_comment_container_' + node.nid;
-		
-			var form=drupalgap_get_form('comment_edit', null, node);	
-	//			console.log(form.validate);
-			$('#' + id).html(form).trigger('create');
-	//		getFBID('#edit-comment-edit-'+node.nid+'-field-fbid-'+Drupal.settings.language_default+'-0-value');
-}			
+
 			
 			
 };
@@ -460,28 +506,31 @@ if(Drupal.user.uid>0){
 function mycomment_edit_validate(form, form_state) {
 	  try {
 //		  var comment = drupalgap_entity_build_from_form_state(form, form_state);
-alert('mycomment_edit_validate');
-console.log(form_state.values.comment_body);
 if (form_state.values.comment_body['und'][0]== '') {
-    drupalgap_form_set_error('comment-body-und-0', 'Sorry, no jokers allowed.');
+    drupalgap_form_set_error('comment-body-und-0', 'Bitte Text eingeben.');
   }
-return true;
+
 //			console.log(comment);
 //			$('#edit-comment-edit-17440-field-fbid-und-0-value').val('122334454556');
 	  }
 	  catch (error) { console.log('comment_edit_submit - ' + error); }
 	}
+
 function mycomment_edit_submit(form, form_state) {
  var comment = drupalgap_entity_build_from_form_state(form, form_state);
- comment_save(comment,{sucess:function(data){
-	 drupalgap_set_message('Ihr Kommentar wurde gesendet.');
-	 console.log(data);
-	 drupalgap_goto('node/'+comment.nid,{reloadPage:true});
 
+  comment_save(comment,{sucess:function(result){
+	 drupalgap_set_message('Ihr Kommentar wurde gesendet.');
+//alert("GOTO InHALT");
+//	 drupalgap_goto('inhalt',{reloadPage:true});
+	 drupalgap_goto('node/'+comment.nid,{reloadPage:true});
+return form;
  }});	 
 
- drupalgap_goto('node/'+comment.nid,{reloadPage:true});
- // console.log(comment);
+// drupalgap_goto('node/'+comment.nid,{reloadPage:true});
+  //return form;
+  
+  // console.log(comment);
  //Drupal.settings.language_default='de';
  //form.action='node/'+comment.nid;  
  //drupalgap_entity_form_submit(form, form_state, comment);
@@ -491,19 +540,39 @@ function mycomment_edit_submit(form, form_state) {
 
 }
 
-function inhalt_form_alter(form, form_state){
-if(form.bundle=='comment_node_rechtsfrage'){
-//	console.log(form,'---------------------------------------------------');
+function inhalt_form_alter(form, form_state, form_id){
+	//alert(form_id);
+/*
+	if(form_id=='comment_edit'){
+	//	form.action = drupalgap.settings.front;
+	//	return form;
+	}
+	*/
+if(form_id=='comment_edit' && form.bundle=='comment_node_rechtsfrage'){
+	console.log(form,'---------------------------------------------------');
 //console.log(form.arguments[1]['field_fbid']['und']);
+//form.elements['submit']['options']['attributes']['value'] = 'action';
+//form.validate.push('mycomment_edit_validate');
 
-form.validate.push('mycomment_edit_validate')
+//	form.action = drupalgap.settings.front;
 
+	 
 form.prefix='<h2>Ihre Antwort:</h2>';
-form.elements['field_fbid']['und'][0].value=form.arguments[1]['field_fbid']['und']['value'];
+//form.elements['field_fbid']['und'][0].default_value=form.arguments[1]['field_fbid']['und']['value'];
 form.elements['field_fbid'].access=false;
+form.elements['field_fbid'].prefix = '<div style="display: none;">';
+form.elements['field_fbid'].suffix = '</div>';
+
+form.elements['field_fbmid'].access = false;
+form.elements['field_fbmid'].prefix = '<div style="display: none;">';
+form.elements['field_fbmid'].suffix = '</div>';
+
+form.submit.push('mycomment_edit_submit');
 //form.elements['field_fbmid'].access=false;
 form.elements['subject'].value=Drupal.user.name;
+//return form;
 }
+
 }
 
 

@@ -1,0 +1,32 @@
+@CHARSET "UTF-8";
+@media print {
+	
+
+
+div.region_header {
+display: none;
+}
+
+
+
+div.field_bewertung{
+	display:none;
+}
+
+#print-btn{
+	display:none;
+}
+
+#subcomment{
+	display:none;
+}
+
+}
+
+ul {
+  list-style-type: none;
+}
+
+div.region_content,div.print{
+	background-color:#fff;
+}
