@@ -186,14 +186,30 @@ function start_block_view(delta, region) {
 			break;
 		case 'fb_login_block':
 			//alert("OK");
+			var id=drupalgap_get_page_id();
+			if(id=='user_login'||id=='user_register')return drupalgap_render(content);
+		//	alert(drupalgap_get_page_id());
 			content['my_button_link'] = {
 					  theme: 'button_link',
-					  text: 'Mit Facebook anmelden',
-					  path: Drupal.settings.site_path +'/user/simple-fb-connect?destination=http://localhost/oauthcallback.html',
+					  text: 'Anmelden',
+		//			  path: 'user/login',
 options:{InAppBrowser:true,reloadPage:true},
 			attributes:{
 				'class': '.ui-nodisc-icon',
-	//	          onclick: "facebook_onclick()",
+				onclick: "drupalgap_goto('user/login')",
+		          //onclick: "facebook_onclick()",
+		          'data-icon': 'info' 
+			}
+			};
+			
+			content['my_button_link2'] = {
+					  theme: 'button_link',
+					  text: 'Registrieren',
+	//				  path: 'user/register',
+options:{InAppBrowser:true,reloadPage:true},
+			attributes:{
+				'class': '.ui-nodisc-icon',
+		          onclick: "drupalgap_goto('user/register')",
 		          'data-icon': 'info' 
 			}
 			};

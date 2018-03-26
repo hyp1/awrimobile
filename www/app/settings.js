@@ -283,7 +283,7 @@ drupalgap.settings.menus['user_menu_authenticated'] = {
         }
       }
     },
-    
+    /*
     {
         title:'Info',
         path:'mobile_info',
@@ -294,7 +294,7 @@ drupalgap.settings.menus['user_menu_authenticated'] = {
           }
         }
       },
-
+*/
     
   ]
 };
@@ -395,10 +395,15 @@ drupalgap.settings.blocks.app_theme = {
   },
   content: {
 	  fb_login_block: {
+	      pages: {
+		        value: ['user/*'],
+		        mode: 'exclude'
+		      },	
 		  roles: {
 		        value: ['anonymous user'],
 		        mode: 'include',
-		      }
+		      },
+	
 	  },
     messages: { },
     main: { },

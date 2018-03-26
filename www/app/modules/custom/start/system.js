@@ -219,6 +219,7 @@ function system_services_postprocess(options, result) {
 var onShake = function () {
 	//alert("SHAKE");
 	  drupalgap_goto('zufall_page',{reloadPage:true});
+	  setTitle("Zufall");
 	};
 	
 	shake.startWatch(onShake, 40 /*, onError */);
